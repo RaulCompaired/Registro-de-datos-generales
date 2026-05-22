@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--Cabecera de la pagina-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="descripcion" content="Pagina de inicio que contiene actividades/noticias">
+    <title>Pagina principal</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+
+    <!--Mi CSS-->
+    <link rel="stylesheet" href="../CSS/header.css">
+
+    <!--Se puede agregar scripts tambien aqui-->
+</head>
+
+<!--Cuerpo del programa (contenido de la pagina)-->
+
+<body>
+
+
+    <!--Encabezado de la pagina-->
+    <header class="header-principal">
+        <div id="header">
+            <nav class="navbar navbar-light bg-light">
+                <div class="d-flex justify-content-between align-items-center w-100 px-4">
+
+                    <a class="navbar-brand m-0" href="#">
+                        <img src="../imagenes/ipn_logo.webp" height="100" alt="Logo ESCOM">
+                    </a>
+
+                    <a class="navbar-brand m-0 text-center text-wrap" href="#">
+                        <h1>BIENVENIDOS ALUMNOS DE NUEVO INGRESO!</h1>
+                    </a>
+
+                    <a class="navbar-brand m-0" href="#">
+                        <img src="../imagenes/logo_escom.png" height="100" alt="Logo Derecho">
+                    </a>
+
+                </div>
+            </nav>
+        </div>
+        <!-- Barra de navegacion -->
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-lg p-3 mb-0">
+
+            <!--Boton de Inicio colocado a la izquierda-->
+            <a class="navbar-brand mx-3" href="inicio.html">Inicio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02"
+                aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample02">
+                <!--Elegimos la clase navbar-nav y mx-auto= margen izquierdo y derecho (lo que deja los elementos al centro)-->
+                <ul class="navbar-nav mx-auto">
+                    <!--Es la clase de items de la navbar y el mx-4= margen izquierdo y derecho en cada item (1 es minimo-5 es maximo)-->
+
+                    <!--Item de navegación que lleva a la pagina de Registro-->
+                    <li class="nav-item active mx-4">
+                        <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
+                    </li>
+
+                    <!--Item de navegacion que lleva a la pagina de Admin-->
+                    <li class="nav-item active mx-4">
+                        <a class="nav-link" href="admin.html">Admin</a>
+                    </li>
+
+                    <!--Item de navegacion que lleva a la pagina de Cuenta-->
+                    <li class="nav-item active mx-4">
+                        <a class="nav-link" href="cuenta.html">Cuenta</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--Fin de ejemplo de encabezado-->
+
+    </header>
+
+    <!--Contenido Principal-->
+    <main>
+
+    <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-header text-white text-center py-3" style="background-color: #6C1D45;">
+                        <h3 class="mb-0 font-weight-bold">Login</h3>
+                    </div>
+                    
+                    <div class="card-body p-4 p-md-5">
+                        <form name="datos">
+                            <div class="mb-3">
+                                <label for="boleta" class="form-label fw-bold">Boleta</label>
+                                <input type="text" class="form-control" id="boleta" name="boleta">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label fw-bold">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+
+                            <div class="d-grid">
+                                <a a class="navbar-brand m-0" href="cuenta.html"> <!-- cuenta -->
+                                <button type="button" class="btn text-white btn-lg" style="background-color: #6C1D45;" onclick="validarlogin()">Ingresar</button>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!--Fin del contenido principal-->
+
+
+    <div class="bg-dark text-white pt-4 pb-2 mt-5">
+        <div class="container">
+
+            <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top border-secondary">
+
+                <div class="col mb-3">
+                    <a href="/" class="d-flex align-items-center mb-3 link-light text-decoration-none"
+                        aria-label="Bootstrap">
+                        <svg class="bi me-2" width="40" height="32" aria-hidden="true">
+                            <use xlink:href="#bootstrap"></use>
+                        </svg>
+                    </a>
+                    <p class="text-white-50">© 2026</p>
+                </div>
+
+                <div class="col mb-3"></div>
+
+                <div class="col mb-3">
+                    <h5>Enlaces</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">IPN OFICIAL</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Registro de datos
+                                generales</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Programa</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Proceso Inscripción</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Examen Diagnostico</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col mb-3">
+                    <h5>Programas Académicos</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">I.S.C</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">I.I.A</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">L.C.D</a></li>
+                    </ul>
+                </div>
+
+                <div class="col mb-3">
+                    <h5>Siguenos en...</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Instagram</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Facebook - ESCOM</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">escomunidad</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">+52 5729-6000</a></li>
+                        <li class="nav-item mb-2"><a href="#"
+                                class="nav-link p-0 text-white-50">direccion_escom@ipn.mx</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+
+
+    </main>
+
+
+    <div class="bg-dark text-white pt-4 pb-2 mt-5">
+        <div class="container">
+
+            <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top border-secondary">
+
+                <div class="col mb-3">
+                    <a href="/" class="d-flex align-items-center mb-3 link-light text-decoration-none"
+                        aria-label="Bootstrap">
+                        <svg class="bi me-2" width="40" height="32" aria-hidden="true">
+                            <use xlink:href="#bootstrap"></use>
+                        </svg>
+                    </a>
+                    <p class="text-white-50">© 2026</p>
+                </div>
+
+                <div class="col mb-3"></div>
+
+                <div class="col mb-3">
+                    <h5>Enlaces</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">IPN OFICIAL</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Registro de datos
+                                generales</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Programa</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Proceso Inscripción</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Examen Diagnostico</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col mb-3">
+                    <h5>Programas Académicos</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">I.S.C</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">I.I.A</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">L.C.D</a></li>
+                    </ul>
+                </div>
+
+                <div class="col mb-3">
+                    <h5>Siguenos en...</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Instagram</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Facebook - ESCOM</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">escomunidad</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">+52 5729-6000</a></li>
+                        <li class="nav-item mb-2"><a href="#"
+                                class="nav-link p-0 text-white-50">direccion_escom@ipn.mx</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+
+    <script src="../bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

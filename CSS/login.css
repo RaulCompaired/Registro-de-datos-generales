@@ -1,0 +1,23 @@
+        .field input.invalid{
+            border-color: #e74c3c;
+            background-color: #fff8f8;
+        }
+
+        .field input.valid{
+            border-color: #27ae60;
+        }
+                .btn-submit{
+            width: 100%;
+            padding: 0.7em;
+            background-color: darkolivegreen;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-weight: 600;
+            margin-top: 0.5em;
+        }
+
+        .btn-submit:hover{
+            background-color: #333;
+        }

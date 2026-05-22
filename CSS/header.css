@@ -1,0 +1,31 @@
+
+#header .navbar {
+    background-image: url('../imagenes/header_blanco.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+#header h1{
+    font-family:'Times New Roman', Times, serif;
+    color: #800000;
+}
+
+/*Clase para modificar el backgroun del navbar*/
+.header-principal .navbar{
+	background: rgb(0, 108, 161);
+	background: linear-gradient(180deg, rgba(0,85,128,1) 0%, rgba(0,102,153,1) 75%, rgba(0,153,230,1) 100%);
+}
+
+/*Clase header principal estilos aplicados a los <li> y a los <a>*/
+.header-principal :is(li,a) {
+    font-size: 35px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#carouselExampleIndicators img {
+    height: 450px; /* Define aquí la altura fija que quieres para tu slider */
+    width: 100%; /* Asegura que abarque todo el ancho de la pantalla */
+    object-fit: contain; /* La magia: recorta la imagen proporcionalmente para que encaje en los 450px */
+    background-color:aliceblue ;
+}
