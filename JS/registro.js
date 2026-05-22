@@ -9,7 +9,7 @@
         marcarCampo("curp", rescurp);
 
         var nombrev = document.forms.datos.nombre.value;
-        var resnombre = nombrev.match(/^[A-Z][a-z]+$/);
+        var resnombre = nombrev.match(/^[A-Z][a-z]+ [A-Z][a-z]+$/);
         marcarCampo("nombre", resnombre);
 
         var telv = document.forms.datos.telefono.value;
@@ -44,3 +44,14 @@
         campo.classList.add("is-valid");
     }
     }
+
+document.getElementById('escuelap').addEventListener('change', function() {
+    var otroInput = document.getElementById('nombreesc');
+    if (this.value === '23') {
+        otroInput.disabled = false;
+        otroInput.focus();
+    } else {
+        otroInput.disabled = true;
+        otroInput.value = ''; 
+    }
+});

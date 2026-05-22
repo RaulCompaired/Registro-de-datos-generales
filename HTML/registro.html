@@ -50,7 +50,7 @@
                     </a>
 
                     <a class="navbar-brand m-0 text-center text-wrap" href="#">
-                        <h1>BIENVENIDOS ALUMNOS DE NUEVO INGRESO!</h1>
+                        <h1>¡BIENVENIDOS ALUMNOS DE NUEVO INGRESO!</h1>
                     </a>
 
                     <a class="navbar-brand m-0" href="#">
@@ -72,7 +72,7 @@
 
             <div class="collapse navbar-collapse" id="navbarsExample02">
                 <!--Elegimos la clase navbar-nav y mx-auto= margen izquierdo y derecho (lo que deja los elementos al centro)-->
-                <ul class="navbar-nav mx-auto">
+                <ul class="navbar-nav ms-auto">
                     <!--Es la clase de items de la navbar y el mx-4= margen izquierdo y derecho en cada item (1 es minimo-5 es maximo)-->
 
                     <!--Item de navegación que lleva a la pagina de Registro-->
@@ -103,29 +103,111 @@
                     
                     <div class="card-body p-4 p-md-5">
                         <form name="datos">
+                            <fieldset>
+                            <legend> Datos Personales</legend>
                             <div class="mb-3">
                                 <label for="boleta" class="form-label fw-bold">Boleta</label>
-                                <input type="text" class="form-control" id="boleta" name="boleta" placeholder="Ej. 2026630000">
+                                <input type="text" class="form-control" id="boleta" name="boleta" placeholder="Ej. 2026630000" minlenght="10" maxlenght="50">
                             </div>
 
                             <div class="mb-3">
                                 <label for="nombre" class="form-label fw-bold">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Yair Marcial">
                             </div>
+                            
+                            <div class="mb-3">
+                                <label for="nacimiento" class="form-label fw-bold">Fecha de nacimiento</label>
+                                <input type="date" class="form-control" id="nacimiento" name="nacimiento" >
+                            </div>
+
+                        <div class="mb-3">
+                                <label class="form-label fw-bold" name="genero">Genero</label> <br>
+                            <label class="form-check-label" for="radioDefault1">Hombre</label>
+                            <input class="form-check-input" type="radio" name="genero" id="radioDefault1">
+                            <label class="form-check-label" for="radioDefault1">Mujer</label>
+                            <input class="form-check-input" type="radio" name="genero" id="radioDefault1">
+                            <label class="form-check-label" for="radioDefault1">Otro</label>
+                            <input class="form-check-input" type="radio" name="genero" id="radioDefault1">
+                        </div>
+
+                            <div class="mb-4">
+                                <label for="curp" class="form-label fw-bold">CURP</label>
+                                <input type="text" class="form-control" id="curp" name="curp" style="text-transform: uppercase;">
+                            </div>
+
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="procedenciafed" name="procedenciafed">
+                                <option selected>Entidad Federativa de Procedencia</option>
+                                <option value="1">Aguascalientes</option>
+                                <option value="2">Baja California</option>
+                                <option value="3">Baja California sur</option>
+                                <option value="4">Campeche</option>
+                                <option value="5">Coahuila</option>
+                                <option value="6">Colima</option>
+                                <option value="7">Chiapas</option>
+                                <option value="8">Chihuahua</option>
+                                <option value="9">Ciudad de México</option>
+                                <option value="10">Durango</option>
+                                <option value="11">Guanajuato</option>
+                                <option value="12">Guerrero</option>                                </select>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="telefono" class="form-label fw-bold">Teléfono</label>
                                 <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="10 dígitos">
                             </div>
+                            </fieldset>
+                             <fieldset>
+                            <legend> Datos de Procedencia</legend>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="escuelap" id="escuelap" name="escuelap">
+                                <option value="" selected>Escuela de Procedencia</option>
+                                <option value="1">CECyT 1</option>
+                                <option value="2">CECyT 2</option>
+                                <option value="3">CECyT 3</option>
+                                <option value="4">CECyT 4</option>
+                                <option value="5">CECyT 5</option>
+                                <option value="6">CECyT 6</option>
+                                <option value="8">CECyT 7</option>
+                                <option value="9">CECyT 8</option>
+                                <option value="10">CECyT 9</option>
+                                <option value="11">CECyT 10</option>
+                                <option value="12">CECyT 11</option>
+                                <option value="13">CECyT 12</option>
+                                <option value="14">CECyT 13</option>
+                                <option value="15">CECyT 14</option>
+                                <option value="16">CECyT 15</option>
+                                <option value="17">CECyT 16</option>
+                                <option value="18">CECyT 17</option>
+                                <option value="19">CECyT 18</option>
+                                <option value="20">CECyT 19</option>
+                                <option value="21">CECyT 20</option>
+                                <option value="22"> CET 1</option>
+                                <option value="23">Otro</option>
+                                </select>
+                            </div>
 
+                            <div class="mb-3">
+                                <label for="nombreesc" class="form-label fw-bold">Nombre de la Escuela</label>
+                                <input type="text" class="form-control" id="nombreesc" name="nombreesc" disabled>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="promedio" class="form-label fw-bold">Promedio</label>
+                                <input type="number" class="form-control" id="promedio" name="promedio" max="10" min="0" >
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend> Datos de Cuenta</legend>
                             <div class="mb-3">
                                 <label for="correo" class="form-label fw-bold">Correo Institucional</label>
                                 <input type="email" class="form-control" id="correo" name="correo" placeholder="usuario@alumno.ipn.mx">
                             </div>
 
-                            <div class="mb-4">
-                                <label for="curp" class="form-label fw-bold">CURP</label>
-                                <input type="text" class="form-control" id="curp" name="curp" style="text-transform: uppercase;">
+                            <div class="mb-3">
+                                <label for="password" class="form-label fw-bold">Constraseña</label>
+                                <input type="password" class="form-control" id="password" name="password" minlength="6">
                             </div>
 
                             <div class="d-grid">
