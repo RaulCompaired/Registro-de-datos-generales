@@ -9,7 +9,7 @@
         marcarCampo("curp", rescurp);
 
         var nombrev = document.forms.datos.nombre.value;
-        var resnombre = nombrev.match(/^[A-Z][a-z]+ [A-Z][a-z]+$/);
+        var resnombre = nombrev.match(/^[A-Z][a-z]+$/);
         marcarCampo("nombre", resnombre);
 
         var telv = document.forms.datos.telefono.value;
@@ -20,24 +20,18 @@
         var rescorreo = correov.match(/^[A-Za-z0-9_.]+@alumno.ipn.mx$/);
         marcarCampo("correo", rescorreo);
 
-        var passwordv = document.forms.datos.password.value;
-        var respassword = passwordv.match(/^[A-Za-z0-9]*[A-Z]+[A-Za-z0-9]*[0-9]+[A-Za-z0-9]*[a-z]+[A-Za-z0-9]*$/);
-        marcarCampo("password", respassword);
-
         if(resboleta == null)  errores.push("Boleta inválida");
         
         if(rescurp == null)  errores.push("Curp inválido");
         
-        if(resnombre == null)  errores.push("Nombre inválido");
+        if(resnombre == null)  errores.push("Nombre inválida");
         
-        if(restel == null)  errores.push("Telefono inválido");      
+        if(restel == null)  errores.push("Telefono inválida");      
         
-        if(rescorreo == null) errores.push("Correo inválido");
-
-        if(respassword == null) errores.push("Contraseña inválida");
+        if(rescorreo == null) errores.push("Correo inválida");
 
           if (errores.length > 0) alert("Algunos datos son inválidos.");
-          else  alert("¡Registro exitoso! \nBoleta: " + boletav + "\nNombre: " + nombrev + "\nTelefono: " + telv + "\nCorreo Instituacional: " + correov + "\nCURP: " + curpv );
+          else  alert("¡Registro exitoso! Boleta: " + boletav + "\nNombre: " + nombrev + "\nTelefono: " + telv + "\nCorreo Instituacional: " + correov + "\nCURP: " + curpv );
 
     }
     function marcarCampo(id, resultado) {
