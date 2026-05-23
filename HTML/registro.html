@@ -7,13 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="descripcion" content="Pagina de inicio que contiene actividades/noticias">
     <title>Pagina principal</title>
-    
+
+    <!--Icono donde va el mundito-->
+    <link rel="icon" href="../imagenes/LogoEquipo.jpg" type="image/png">
+
 
     <!--Bootstrap-->
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
 
     <!--Mi CSS-->
     <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/registro.css">
 
     <!--Se puede agregar scripts tambien aqui-->
 </head>
@@ -29,7 +33,7 @@
             <nav class="navbar navbar-light bg-light">
                 <div class="d-flex justify-content-between align-items-center w-100 px-4">
 
-                    <a class="navbar-brand m-0" href="#">
+                    <a class="navbar-brand m-0" href="https://www.ipn.mx">
                         <img src="../imagenes/ipn_logo.webp" height="100" alt="Logo ESCOM">
                     </a>
 
@@ -37,7 +41,7 @@
                         <h1>¡BIENVENIDOS ALUMNOS DE NUEVO INGRESO!</h1>
                     </a>
 
-                    <a class="navbar-brand m-0" href="#">
+                    <a class="navbar-brand m-0" href="https://www.escom.ipn.mx">
                         <img src="../imagenes/logo_escom.png" height="100" alt="Logo Derecho">
                     </a>
 
@@ -64,10 +68,16 @@
                         <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
                     </li>
 
-                    <!--Item de navegacion que lleva a la pagina de Login-->
+                    <!--Item de navegacion que lleva a la pagina de Admin-->
                     <li class="nav-item active mx-4">
-                        <a class="nav-link" href="login.html">Login</a>
+                        <a class="nav-link" href="loginadmin.html">Admin</a>
                     </li>
+
+                    <!--Item de navegacion que lleva a la pagina de Cuenta-->
+                    <li class="nav-item active mx-4">
+                        <a class="nav-link" href="logincuenta.html">Cuenta</a>
+                    </li>
+                    
                 </ul>
             </div>
         </nav>
@@ -77,138 +87,198 @@
 
     <!--Contenido Principal-->
     <main class="container my-5">
-        
-         <div class="row justify-content-center">
+
+
+        <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="card shadow-lg border-0 rounded-3">
-                    <div class="card-header text-white text-center py-3" style="background-color: #6C1D45;">
+                    <div class="card-header text-white text-center py-3 fondo-guinda">
                         <h3 class="mb-0 font-weight-bold">Registro de Nuevo Ingreso</h3>
                     </div>
-                    
+
                     <div class="card-body p-4 p-md-5">
                         <form name="datos">
                             <fieldset>
-                            <legend> Datos Personales</legend>
-                            <div class="mb-3">
-                                <label for="boleta" class="form-label fw-bold">Boleta</label>
-                                <input type="text" class="form-control" id="boleta" name="boleta" placeholder="Ej. 2026630000" minlenght="10" maxlenght="50">
-                            </div>
+                                <legend> Datos Personales</legend>
+                                <div class="mb-3">
+                                    <label for="boleta" class="form-label fw-bold">Boleta</label>
+                                    <input type="text" class="form-control" id="boleta" name="boleta"
+                                        placeholder="Ej. 2026630000" minlenght="10" maxlenght="50">
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label fw-bold">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Yair Marcial">
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="nacimiento" class="form-label fw-bold">Fecha de nacimiento</label>
-                                <input type="date" class="form-control" id="nacimiento" name="nacimiento" >
-                            </div>
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label fw-bold">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                        placeholder="Ej. Yair Marcial">
+                                </div>
 
-                        <div class="mb-3">
-                                <label class="form-label fw-bold" name="genero">Genero</label> <br>
-                            <label class="form-check-label" for="radioDefault1">Hombre</label>
-                            <input class="form-check-input" type="radio" name="genero" id="radioDefault1">
-                            <label class="form-check-label" for="radioDefault1">Mujer</label>
-                            <input class="form-check-input" type="radio" name="genero" id="radioDefault1">
-                            <label class="form-check-label" for="radioDefault1">Otro</label>
-                            <input class="form-check-input" type="radio" name="genero" id="radioDefault1">
-                        </div>
+                                <div class="mb-3">
+                                    <label for="nacimiento" class="form-label fw-bold">Fecha de nacimiento</label>
+                                    <input type="date" class="form-control" id="nacimiento" name="nacimiento">
+                                </div>
 
-                            <div class="mb-4">
-                                <label for="curp" class="form-label fw-bold">CURP</label>
-                                <input type="text" class="form-control" id="curp" name="curp" style="text-transform: uppercase;">
-                            </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold" name="genero">Genero</label> <br>
+                                    <label class="form-check-label" for="Hombre">Hombre</label>
+                                    <input class="form-check-input" type="radio" name="genero" id="Hombre">
+                                    <label class="form-check-label" for="Mujer">Mujer</label>
+                                    <input class="form-check-input" type="radio" name="genero" id="Mujer">
+                                    <label class="form-check-label" for="Otro">Otro</label>
+                                    <input class="form-check-input" type="radio" name="genero" id="Otro">
+                                </div>
 
-                            <div class="mb-3">
-                                <select class="form-select" aria-label="procedenciafed" name="procedenciafed">
-                                <option selected>Entidad Federativa de Procedencia</option>
-                                <option value="1">Aguascalientes</option>
-                                <option value="2">Baja California</option>
-                                <option value="3">Baja California sur</option>
-                                <option value="4">Campeche</option>
-                                <option value="5">Coahuila</option>
-                                <option value="6">Colima</option>
-                                <option value="7">Chiapas</option>
-                                <option value="8">Chihuahua</option>
-                                <option value="9">Ciudad de México</option>
-                                <option value="10">Durango</option>
-                                <option value="11">Guanajuato</option>
-                                <option value="12">Guerrero</option>                                </select>
-                            </div>
+                                <div class="mb-4">
+                                    <label for="curp" class="form-label fw-bold">CURP</label>
+                                    <input type="text" class="form-control text-uppercase" id="curp" name="curp">
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="telefono" class="form-label fw-bold">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="10 dígitos">
-                            </div>
+                                <div class="mb-3">
+                                    <select class="form-select" aria-label="procedenciafed" name="procedenciafed"
+                                        id="procedenciafed">
+                                        <option selected>Entidad Federativa de Procedencia</option>
+                                        <option value="Aguascalientes">Aguascalientes</option>
+                                        <option value="Baja California">Baja California</option>
+                                        <option value="Baja California Sur">Baja California sur</option>
+                                        <option value="Campeche">Campeche</option>
+                                        <option value="Coahuila">Coahuila</option>
+                                        <option value="Colima">Colima</option>
+                                        <option value="Chiapas">Chiapas</option>
+                                        <option value="Chihuahua">Chihuahua</option>
+                                        <option value="Ciudad de Mexico">Ciudad de México</option>
+                                        <option value="Durango">Durango</option>
+                                        <option value="Guanajuato">Guanajuato</option>
+                                        <option value="Guerrero">Guerrero</option>
+                                        <option value="Hidalgo">Hidalgo</option>
+                                        <option value="Jalisco">Jalisco</option>
+                                        <option value="Edo. de México">Edo. de México</option>
+                                        <option value="Michoacán de Ocampo">Michoacán de Ocampo</option>
+                                        <option value="Morelos">Morelos</option>
+                                        <option value="Nayarit">Nayarit</option>
+                                        <option value="Nuevo León">Nuevo León</option>
+                                        <option value="Oaxaca">Oaxaca</option>
+                                        <option value="Puebla">Puebla</option>
+                                        <option value="Querétaro">Querétaro</option>
+                                        <option value="Quintana Roo">Quintana Roo</option>
+                                        <option value="San Luis Potosí">San Luis Potosí</option>
+                                        <option value="acatecas">Zacatecas</option>
+                                        <option value="Sinaloa">Sinaloa</option>
+                                        <option value="Sonora">Sonora</option>
+                                        <option value="Tabasco">Tabasco</option>
+                                        <option value="Tamaulipas">Tamaulipas</option>
+                                        <option value="Tlaxcala">Tlaxcala</option>
+                                        <option value="Veracruz">Veracruz</option>
+                                        <option value="Yucatán">Yucatán</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="telefono" class="form-label fw-bold">Teléfono</label>
+                                    <input type="tel" class="form-control" id="telefono" name="telefono"
+                                        placeholder="10 dígitos">
+                                </div>
                             </fieldset>
-                             <fieldset>
-                            <legend> Datos de Procedencia</legend>
-                            <div class="mb-3">
-                                <select class="form-select" aria-label="escuelap" id="escuelap" name="escuelap">
-                                <option value="" selected>Escuela de Procedencia</option>
-                                <option value="1">CECyT 1</option>
-                                <option value="2">CECyT 2</option>
-                                <option value="3">CECyT 3</option>
-                                <option value="4">CECyT 4</option>
-                                <option value="5">CECyT 5</option>
-                                <option value="6">CECyT 6</option>
-                                <option value="8">CECyT 7</option>
-                                <option value="9">CECyT 8</option>
-                                <option value="10">CECyT 9</option>
-                                <option value="11">CECyT 10</option>
-                                <option value="12">CECyT 11</option>
-                                <option value="13">CECyT 12</option>
-                                <option value="14">CECyT 13</option>
-                                <option value="15">CECyT 14</option>
-                                <option value="16">CECyT 15</option>
-                                <option value="17">CECyT 16</option>
-                                <option value="18">CECyT 17</option>
-                                <option value="19">CECyT 18</option>
-                                <option value="20">CECyT 19</option>
-                                <option value="21">CECyT 20</option>
-                                <option value="22"> CET 1</option>
-                                <option value="23">Otro</option>
-                                </select>
-                            </div>
+                            <fieldset>
+                                <legend> Datos de Procedencia</legend>
+                                <div class="mb-3">
+                                    <select class="form-select" aria-label="escuelap" id="escuelap" name="escuelap">
+                                        <option value="" selected>Escuela de Procedencia</option>
+                                        <option value="CECyT 1">CECyT 1</option>
+                                        <option value="CECyT 2">CECyT 2</option>
+                                        <option value="CECyT 3">CECyT 3</option>
+                                        <option value="CECyT 4">CECyT 4</option>
+                                        <option value="CECyT 5">CECyT 5</option>
+                                        <option value="CECyT 6">CECyT 6</option>
+                                        <option value="CECyT 7">CECyT 7</option>
+                                        <option value="CECyT 8">CECyT 8</option>
+                                        <option value="CECyT 9">CECyT 9</option>
+                                        <option value="CECyT 10">CECyT 10</option>
+                                        <option value="CECyT 11">CECyT 11</option>
+                                        <option value="CECyT 12">CECyT 12</option>
+                                        <option value="CECyT 13">CECyT 13</option>
+                                        <option value="CECyT 14">CECyT 14</option>
+                                        <option value="CECyT 15">CECyT 15</option>
+                                        <option value="CECyT 16">CECyT 16</option>
+                                        <option value="CECyT 17">CECyT 17</option>
+                                        <option value="CECyT 18">CECyT 18</option>
+                                        <option value="CECyT 19">CECyT 19</option>
+                                        <option value="CECyT 20">CECyT 20</option>
+                                        <option value="CET 1"> CET 1</option>
+                                        <option value="Otro"> Otro</option>
+                                    </select>
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="nombreesc" class="form-label fw-bold">Nombre de la Escuela</label>
-                                <input type="text" class="form-control" id="nombreesc" name="nombreesc" disabled>
-                            </div>
+                                <div class="mb-3">
+                                    <label for="nombreesc" class="form-label fw-bold">Nombre de la Escuela</label>
+                                    <input type="text" class="form-control" id="nombreesc" name="nombreesc" disabled>
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="promedio" class="form-label fw-bold">Promedio</label>
-                                <input type="number" class="form-control" id="promedio" name="promedio" max="10" min="0" >
-                            </div>
-                        </fieldset>
+                                <div class="mb-3">
+                                    <label for="promedio" class="form-label fw-bold">Promedio</label>
+                                    <input type="number" class="form-control" id="promedio" name="promedio" max="10"
+                                        min="6">
+                                </div>
+                            </fieldset>
 
-                        <fieldset>
-                            <legend> Datos de Cuenta</legend>
-                            <div class="mb-3">
-                                <label for="correo" class="form-label fw-bold">Correo Institucional</label>
-                                <input type="email" class="form-control" id="correo" name="correo" placeholder="usuario@alumno.ipn.mx">
-                            </div>
+                            <fieldset>
+                                <legend> Datos de Cuenta</legend>
+                                <div class="mb-3">
+                                    <label for="correo" class="form-label fw-bold">Correo Institucional</label>
+                                    <input type="email" class="form-control" id="correo" name="correo"
+                                        placeholder="usuario@alumno.ipn.mx">
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label fw-bold">Constraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" minlength="6">
-                            </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label fw-bold">Constraseña</label>
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        minlength="6">
 
-                            <div class="d-grid">
-                                <button type="button" class="btn text-white btn-lg" style="background-color: #6C1D45;" onclick="validar()">Registrarse</button>
-                            </div>
+                                    <div class="form-text">
+                                        Tu contraseña debe contener:
+                                        <ul class="mb-0">
+                                            <li>Al menos 6 caracteres</li>
+                                            <li>Una letra mayúscula</li>
+                                            <li>Un número</li>
+                                            <li>Un carácter especial (ej. @, #, -, _)</li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="button" class="btn text-white btn-lg fondo-guinda"
+                                        onclick="validar()">Registrarse</button>
+                                </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="modal fade" tabindex="-1" id="modalform">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-white fondo-guinda">
+                        <h5 class="modal-title" id="modaltitle">Resumen de Registro</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="modalp" class="list-group list-group-flush"></ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </main>
     <!--Fin del contenido principal-->
 
 
     <!--FOOTER-->
-<div class="bg-dark text-white pt-4 pb-2 mt-5">
+    <div class="bg-dark text-white pt-4 pb-2 mt-5">
         <div class="container">
 
             <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top border-secondary">
@@ -273,7 +343,7 @@
         </div>
     </div>
     <!--FIN DE FOOTER-->
-    
+
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
     <script src="../JS/registro.js"></script>
 </body>

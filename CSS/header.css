@@ -29,3 +29,7 @@
     object-fit: contain; /* La magia: recorta la imagen proporcionalmente para que encaje en los 450px */
     background-color:aliceblue ;
 }
+
+.fondo-guinda{
+    background-color: #6C1D45 !important;
+}

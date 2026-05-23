@@ -90,7 +90,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="card shadow-lg border-0 rounded-3">
-                    <div class="card-header text-white text-center py-3" style="background-color: #6C1D45;">
+                    <div class="card-header text-white text-center py-3 fondo-guinda">
                         <h3 class="mb-0 font-weight-bold">Login</h3>
                     </div>
 
@@ -107,10 +107,10 @@
                             </div>
 
                             <div class="d-grid">
-                                <a a class="navbar-brand m-0" href="cuenta.html"> <!-- cuenta -->
-                                    <button type="button" class="btn text-white btn-lg"
-                                        style="background-color: #6C1D45;" onclick="validarlogin()">Ingresar</button>
-                                </a>
+                                <div class="d-grid">
+                                    <button type="button" class="btn text-white btn-lg fondo-guinda"
+                                        onclick="validarlogin('cuenta.html')">Ingresar</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -192,6 +192,7 @@
 
 
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../JS/login.js"></script>
 
 </body>
 
