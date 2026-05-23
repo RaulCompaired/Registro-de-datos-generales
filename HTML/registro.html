@@ -7,24 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="descripcion" content="Pagina de inicio que contiene actividades/noticias">
     <title>Pagina principal</title>
-    <script>
-    $(document).ready(function() {
-    // 1. Cambiar 'click' por 'change'
-    $('#escuelap').on('change', function() {
-        // 2. Obtener el valor seleccionado directamente con jQuery
-        var op = $(this).val();
-        
-        // 3. Evaluar si la opción es "3" (Otro)
-        if (op === '3') {
-            $('#nombreesc').prop('disabled', false); // Habilita
-        } else {
-            $('#nombreesc').prop('disabled', true);  // Deshabilita
-            $('#nombreesc').val('');                 // Opcional: Limpia el texto si cambian de opinión
-        }
-    });
-});
+    
 
-    </script>
     <!--Bootstrap-->
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
 
@@ -224,60 +208,72 @@
 
 
     <!--FOOTER-->
-    <div class="bg-dark text-white pt-4 pb-2 mt-5">
+<div class="bg-dark text-white pt-4 pb-2 mt-5">
         <div class="container">
 
             <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top border-secondary">
 
+
                 <div class="col mb-3">
-                    <a href="/" class="d-flex align-items-center mb-3 link-light text-decoration-none"
-                        aria-label="Bootstrap">
-                        <svg class="bi me-2" width="40" height="32" aria-hidden="true">
-                            <use xlink:href="#bootstrap"></use>
-                        </svg>
+                    <p>EQUIPO TOP GLOBALES</p>
+                    <a href="https://www.youtube.com/watch?v=DLzxrzFCyOs&list=RDDLzxrzFCyOs&start_radio=1"
+                        target="_blank" rel="noopener"
+                        class="d-flex align-items-center mb-3 link-light text-decoration-none">
+                        <img src="../imagenes/LogoEquipo.jpg" alt="LogoEquipo2" height="80" class="me-2">
                     </a>
                     <p class="text-white-50">© 2026</p>
                 </div>
 
-                <div class="col mb-3"></div>
-
                 <div class="col mb-3">
                     <h5>Enlaces</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="https://www.ipn.mx" class="nav-link p-0 text-white-50">IPN OFICIAL</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Registro de datos
+                        <li class="nav-item mb-2"><a href="https://www.ipn.mx" target="_blank" rel="noopener"
+                                class="nav-link p-0 text-white-50">IPN
+                                OFICIAL</a></li>
+                        <li class="nav-item mb-2"><a href="https://uteycv.escom.ipn.mx/s/ni/registro/" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">Registro de datos
                                 generales</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Programa</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Proceso Inscripción</a>
-                        </li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Examen Diagnostico</a>
-                        </li>
+                        <li class="nav-item mb-2"><a href="https://www.escom.ipn.mx/nuevoingreso25_2/#jornada"
+                                target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Programa</a></li>
+                        <li class="nav-item mb-2"><a
+                                href="https://www.escom.ipn.mx/nuevoingreso25_2/assets/docs/ProcedimientoInscripcionNuevoIngreso_25_2.pdf"
+                                target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Proceso
+                                Inscripción</a>
+
                     </ul>
                 </div>
 
                 <div class="col mb-3">
                     <h5>Programas Académicos</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularISC2020.pdf" class="nav-link p-0 text-white-50">I.S.C</a></li>
-                        <li class="nav-item mb-2"><a href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularIIA2020.pdf" class="nav-link p-0 text-white-50">I.I.A</a></li>
-                        <li class="nav-item mb-2"><a href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularLCD2020H.pdf" class="nav-link p-0 text-white-50">L.C.D</a></li>
+                        <li class="nav-item mb-2"><a
+                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularISC2020.pdf" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">I.S.C</a></li>
+                        <li class="nav-item mb-2"><a
+                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularIIA2020.pdf" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">I.I.A</a></li>
+                        <li class="nav-item mb-2"><a
+                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularLCD2020H.pdf" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">L.C.D</a></li>
                     </ul>
                 </div>
 
                 <div class="col mb-3">
-                    <h5>Siguenos en...</h5>
+                    <h5>Síguenos en...</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="https://www.instagram.com/escom_ipn_mx/" class="nav-link p-0 text-white-50">Instagram</a></li>
-                        <li class="nav-item mb-2"><a href="https://www.facebook.com/escomipnmx/" class="nav-link p-0 text-white-50">Facebook - ESCOM</a></li>
-                        <li class="nav-item mb-2"><a href="https://www.ipn.mx/gacetapolitecnica/" class="nav-link p-0 text-white-50">Gaceta Politécnica</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">direccion_escom@ipn.mx</a></li>
+                        <li class="nav-item mb-2"><a href="https://www.instagram.com/escom_ipn_mx/" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">Instagram</a></li>
+                        <li class="nav-item mb-2"><a href="https://www.facebook.com/escomipnmx/" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">Facebook - ESCOM</a></li>
+                        <li class="nav-item mb-2"><a href="https://www.ipn.mx/gacetapolitecnica/" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">Gaceta Politécnica</a></li>
                     </ul>
                 </div>
             </footer>
         </div>
     </div>
     <!--FIN DE FOOTER-->
-
+    
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
     <script src="../JS/registro.js"></script>
 </body>

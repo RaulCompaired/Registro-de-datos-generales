@@ -6,12 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="descripcion" content="Pagina de inicio que contiene actividades/noticias">
-    <title>Pagina principal</title>
+    <title>Pagina Bienvenida</title>
+
+    <!--Icono donde estaba el mundito-->
+    <link rel="icon" href="../imagenes/LogoEquipo.jpg" type="image/png">
+
     <!--Bootstrap-->
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
 
     <!--Mi CSS-->
     <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/inicio.css">
 
     <!--Se puede agregar scripts tambien aqui-->
 </head>
@@ -20,22 +25,21 @@
 
 <body>
 
-
     <!--Encabezado de la pagina-->
     <header class="header-principal">
         <div id="header">
             <nav class="navbar navbar-light bg-light">
                 <div class="d-flex justify-content-between align-items-center w-100 px-4">
 
-                    <a class="navbar-brand m-0" href="https://www.ipn.mx">
+                    <a class="navbar-brand m-0" href="https://www.ipn.mx" target="_blank" rel="noopener">
                         <img src="../imagenes/ipn_logo.webp" width="100" height="100" alt="Logo ESCOM">
                     </a>
 
-                    <a class="navbar-brand m-0 text-center text-wrap" href="#">
-                        <h1>¡BIENVENIDOS ALUMNOS DE NUEVO INGRESO!</h1>
-                    </a>
+                    <div class="m-0 text-center text-wrap">
+                        <h1><strong>¡BIENVENIDOS ALUMNOS DE NUEVO INGRESO!</strong></h1>
+                    </div>
 
-                    <a class="navbar-brand m-0" href="https://www.escom.ipn.mx">
+                    <a class="navbar-brand m-0" href="https://www.escom.ipn.mx" target="_blank" rel="noopener">
                         <img src="../imagenes/logo_escom.png" width="100" height="100" alt="Logo Derecho">
                     </a>
 
@@ -62,13 +66,16 @@
                         <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
                     </li>
 
-                    <!--Item de navegacion que lleva a la pagina de Login-->
+                    <!--Item de navegacion que lleva a la pagina de Admin-->
                     <li class="nav-item active mx-4">
-                        <a class="nav-link" href="login.html">Login</a>
+                        <a class="nav-link" href="loginadmin.html">Admin</a>
                     </li>
 
-
+                    <!--Item de navegacion que lleva a la pagina de Cuenta-->
+                    <li class="nav-item active mx-4">
+                        <a class="nav-link" href="logincuenta.html">Cuenta</a>
                     </li>
+
                 </ul>
             </div>
         </nav>
@@ -88,22 +95,32 @@
                 <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
             </ol>
             <div class="carousel-inner">
+                <!--RESULTADOS DE BECAS-->
                 <div class="carousel-item active">
-                    <a href="https://www.sibec.ipn.mx">
+                    <a href="https://www.sibec.ipn.mx" target="_blank" rel="noopener" class="position-relative z-1"
+                        title="Consultar resultados">
                         <img class="d-block w-100" src="../imagenes/banner_becas.jpg" alt="First slide">
                     </a>
                 </div>
+                <!--NUEVO INGRESO-->
                 <div class="carousel-item">
-                    <a href="https://www.escom.ipn.mx/nuevoingreso25_2/">
+                    <a href="https://www.escom.ipn.mx/nuevoingreso25_2/" target="_blank" rel="noopener"
+                        class="position-relative z-1" title="Consultar prográma">
                         <img class="d-block w-100" src="../imagenes/Banner_NuevoIngreso.jpg" alt="Second slide">
                     </a>
                 </div>
+
+                <!--RED DE GENERO-->
                 <div class="carousel-item">
-                    <a href="https://www.ipn.mx/genero/">
+                    <a href="https://www.ipn.mx/genero/" target="_blank" rel="noopener" class="position-relative z-1"
+                        title="Consultar red de genero">
                         <img class="d-block w-100" src="../imagenes/lineaguinda.png" alt="Third slide">
                     </a>
                 </div>
             </div>
+
+
+            <!--BOTONES DE SLIDE PREVIO/SIGUIENTE DEL CAROUSEL-->
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
@@ -116,9 +133,8 @@
         <!--Fin del carrousel de Noticias-->
 
 
-        <!--Seccion de actividades-->
+        <!--SECCION DE ACTIVIDADES-->
 
-        <!--******************PRIMER LINEA : ACTIVIDADES 1 Y 2 ******************************-->
         <!-- Registro de datos generales-->
         <div class="row mb-2 container my-5">
             <div class="col-md-6">
@@ -134,18 +150,23 @@
                         <a href="registro.html" class="stretched-link">Regístrate aquí</a>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <img src="../imagenes/burrito_ipn.png" class="img-fluid" alt="Descripción de la imagen"
-                            style="width: 200px; height: 250px; object-fit: cover;">
+                        <a href="registro.html" class="position-relative z-1" title="Ir al registro">
+                            <img src="../imagenes/burrito_ipn.png" class="img-fluid img-actividades"
+                                alt="Mascota IPN Burrito">
+                        </a>
                     </div>
                 </div>
             </div>
+
+
+
             <!--JORDNADA DE INDUCCION-->
             <div class="col-md-6">
                 <div
                     class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <strong class="d-inline-block mb-2 text-primary">Nuevo Ingreso</strong>
-                        <h3 class="mb-0">Jornada de Induccion</h3>
+                        <h3 class="mb-0">Jornada de Inducción</h3>
                         <div class="mb-1 text-muted">Enero 2026</div>
                         <p class="card-text mb-auto">Auditorio de la ESCOM. <br>
                             Serie de actividades donde conocerás las instalaciones, servicios y funcionarios de la
@@ -154,8 +175,12 @@
                         <a href="https://www.escom.ipn.mx/nuevoingreso25_2/#jornada" class="stretched-link">Programa</a>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <img src="../imagenes/auditorio.jpg" class="img-fluid" alt="Descripción de la imagen"
-                            style="width: 200px; height: 250px; object-fit: cover;">
+                        <a href="https://www.escom.ipn.mx/nuevoingreso25_2/#jornada.html" class="position-relative z-1"
+                            title="Ir al registro">
+                            <img src="../imagenes/auditorio.jpg" class="img-fluid img-actividades"
+                                alt="Auditorio ESCOM">
+                        </a>
+
                     </div>
                 </div>
             </div>
@@ -163,12 +188,16 @@
 
 
 
-        <!--******************PRIMER LINEA : ACTIVIDADES 1 Y 2 ******************************-->
-        <!-- Registro de datos generales-->
+        <!--******************PRIMER LINEA : ACTIVIDADES 3 Y 4 ******************************-->
+
+
+        <!-- ENTREGA DE DOCUMENTOS-->
+        <!-- ENTREGA DE DOCUMENTOS Y EXAMEN DE INGRESO -->
         <div class="row mb-2 container my-5">
+            
+            <!-- ENTREGA DE DOCUMENTOS-->
             <div class="col-md-6">
-                <div
-                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <strong class="d-inline-block mb-2 text-primary">Nuevo Ingreso</strong>
                         <h3 class="mb-0">Entrega de Documentos</h3>
@@ -176,35 +205,38 @@
                         <p class="card-text mb-auto">Servicios Escolares en ESCOM<br>
                             Entrega los documentos
                         </p>
-                        <a href="registro.html" class="stretched-link">Regístrate aquí</a>
+                        <a href="registro.html" target="_blank" rel="noopener" class="stretched-link">Regístrate aquí</a>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <img src="../imagenes/documentos.jpg" class="img-fluid" alt="Descripción de la imagen"
-                            style="width: 200px; height: 250px; object-fit: cover;">
+                        <!-- Enlace con d-block para evitar que rompa el diseño -->
+                        <a href="registro.html" target="_blank" rel="noopener" class="position-relative z-1 d-block" title="Ir al registro">
+                            <img src="../imagenes/documentos.jpg" class="img-fluid img-actividades" alt="Entrega de documentos">
+                        </a>
                     </div>
                 </div>
             </div>
-            <!--JORDNADA DE INDUCCION-->
+
+            <!--EXAMEN DE INGRESO-->
             <div class="col-md-6">
-                <div
-                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <strong class="d-inline-block mb-2 text-primary">Nuevo Ingreso</strong>
                         <h3 class="mb-0">Examen de Ingreso</h3>
                         <div class="mb-1 text-muted">Enero 24 - 2026</div>
                         <p class="card-text mb-auto">Asignada en horario. <br>
-                            La intención de este examen es que identifiques tus áreas de oportunidad en aquellos temas
-                            que consideramos debes manejar para enfrentar sin inconvenientes tu formación profesional.
+                            La intención de este examen es que identifiques tus áreas de oportunidad en aquellos temas que consideramos debes manejar.
                         </p>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <img src="../imagenes/examen.jpg" class="img-fluid" alt="Descripción de la imagen"
-                            style="width: 200px; height: 250px; object-fit: cover;">
+                        <!-- Imagen también envuelta en su enlace con title -->
+                        <a href="https://www.escom.ipn.mx/nuevoingreso26_2/" class="position-relative z-1 d-block" title="Detalles del Examen">
+                            <img src="../imagenes/examen.jpg" class="img-fluid img-actividades" alt="Examen de ingreso">
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
 
+        </div>
 
 
 
@@ -219,8 +251,9 @@
 
 
                 <div class="col mb-3">
-                    <p>EQUIPO TOP_GLOBALES</p>
+                    <p>EQUIPO TOP GLOBALES</p>
                     <a href="https://www.youtube.com/watch?v=DLzxrzFCyOs&list=RDDLzxrzFCyOs&start_radio=1"
+                        target="_blank" rel="noopener"
                         class="d-flex align-items-center mb-3 link-light text-decoration-none">
                         <img src="../imagenes/LogoEquipo.jpg" alt="LogoEquipo2" height="80" class="me-2">
                     </a>
@@ -230,15 +263,19 @@
                 <div class="col mb-3">
                     <h5>Enlaces</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="https://www.ipn.mx" class="nav-link p-0 text-white-50">IPN
+                        <li class="nav-item mb-2"><a href="https://www.ipn.mx" target="_blank" rel="noopener"
+                                class="nav-link p-0 text-white-50">IPN
                                 OFICIAL</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Registro de datos
+                        <li class="nav-item mb-2"><a href="https://uteycv.escom.ipn.mx/s/ni/registro/" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">Registro de datos
                                 generales</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Programa</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Proceso Inscripción</a>
-                        </li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Examen Diagnostico</a>
-                        </li>
+                        <li class="nav-item mb-2"><a href="https://www.escom.ipn.mx/nuevoingreso25_2/#jornada"
+                                target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Programa</a></li>
+                        <li class="nav-item mb-2"><a
+                                href="https://www.escom.ipn.mx/nuevoingreso25_2/assets/docs/ProcedimientoInscripcionNuevoIngreso_25_2.pdf"
+                                target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Proceso
+                                Inscripción</a>
+
                     </ul>
                 </div>
 
@@ -246,28 +283,26 @@
                     <h5>Programas Académicos</h5>
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><a
-                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularISC2020.pdf"
-                                class="nav-link p-0 text-white-50">I.S.C</a></li>
+                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularISC2020.pdf" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">I.S.C</a></li>
                         <li class="nav-item mb-2"><a
-                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularIIA2020.pdf"
-                                class="nav-link p-0 text-white-50">I.I.A</a></li>
+                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularIIA2020.pdf" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">I.I.A</a></li>
                         <li class="nav-item mb-2"><a
-                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularLCD2020H.pdf"
-                                class="nav-link p-0 text-white-50">L.C.D</a></li>
+                                href="https://www.escom.ipn.mx/docs/oferta/mapaCurricularLCD2020H.pdf" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">L.C.D</a></li>
                     </ul>
                 </div>
 
                 <div class="col mb-3">
-                    <h5>Siguenos en...</h5>
+                    <h5>Síguenos en...</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="https://www.instagram.com/escom_ipn_mx/"
-                                class="nav-link p-0 text-white-50">Instagram</a></li>
-                        <li class="nav-item mb-2"><a href="https://www.facebook.com/escomipnmx/"
-                                class="nav-link p-0 text-white-50">Facebook - ESCOM</a></li>
-                        <li class="nav-item mb-2"><a href="https://www.ipn.mx/gacetapolitecnica/"
-                                class="nav-link p-0 text-white-50">Gaceta Politécnica</a></li>
-                        <li class="nav-item mb-2"><a href="#"
-                                class="nav-link p-0 text-white-50">direccion_escom@ipn.mx</a></li>
+                        <li class="nav-item mb-2"><a href="https://www.instagram.com/escom_ipn_mx/" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">Instagram</a></li>
+                        <li class="nav-item mb-2"><a href="https://www.facebook.com/escomipnmx/" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">Facebook - ESCOM</a></li>
+                        <li class="nav-item mb-2"><a href="https://www.ipn.mx/gacetapolitecnica/" target="_blank"
+                                rel="noopener" class="nav-link p-0 text-white-50">Gaceta Politécnica</a></li>
                     </ul>
                 </div>
             </footer>

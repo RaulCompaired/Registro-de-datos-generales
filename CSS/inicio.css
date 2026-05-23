@@ -2,3 +2,10 @@
     height: 200px;         /* Cambia este número si lo quieres más alto o más bajo */
     object-fit: cover;     /* Hace que la imagen se adapte al espacio sin estirarse feo */
 }
+
+.img-actividades{
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
+}
+

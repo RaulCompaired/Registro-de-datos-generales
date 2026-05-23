@@ -16,7 +16,7 @@
 
     <!--Mi CSS-->
     <link rel="stylesheet" href="../CSS/header.css">
-    <link rel="stylesheet" href="../CSS/cuenta.css">
+    <link rel="stylesheet" href="../CSS/admin.css">
 
     <!--Se puede agregar scripts tambien aqui-->
 </head>
@@ -83,13 +83,43 @@
 
     </header>
 
+
     <!--Contenido Principal-->
     <main class="container my-5">
 
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-header text-white text-center py-3" style="background-color: #6C1D45;">
+                        <h3 class="mb-0 font-weight-bold">Login</h3>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+                        <form name="datos">
+                            <div class="mb-3">
+                                <label for="boleta" class="form-label fw-bold">Boleta</label>
+                                <input type="text" class="form-control" id="boleta" name="boleta">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label fw-bold">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+
+                            <div class="d-grid">
+                                <a a class="navbar-brand m-0" href="cuenta.html"> <!-- cuenta -->
+                                    <button type="button" class="btn text-white btn-lg"
+                                        style="background-color: #6C1D45;" onclick="validarlogin()">Ingresar</button>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
     <!--Fin del contenido principal-->
-
 
 
     <!--FOOTER-->
