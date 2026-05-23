@@ -98,12 +98,12 @@ document.getElementById('escuelap').addEventListener('change', function() {
 
 
 //CALENDARIO
-//Bloqueamos el calendario para que no puedan exigir fecha futura y que tengan almenos 16 (pensando en los genios) y una maximo de 100 años
+//Bloqueamos el calendario para que no puedan exigir fecha futura y que tengan almenos 16 (pensando en los genios) y una máximo de 100 años
 window.addEventListener('DOMContentLoaded', function() {
     var campoNacimiento = document.getElementById('nacimiento');
     var hoy = new Date();
     
-    //El minimo de edad donde ademas comprobamos que sea de dos digitos para que se adapte al formato de html
+    //El mínimo de edad donde ademas comprobamos que sea de dos digitos para que se adapte al formato de html
     var fechaMax = new Date(hoy);
     fechaMax.setFullYear(fechaMax.getFullYear() - 16);
     var anioMax = fechaMax.getFullYear();
@@ -111,7 +111,7 @@ window.addEventListener('DOMContentLoaded', function() {
     var diaMax = String(fechaMax.getDate()).padStart(2, '0');
     campoNacimiento.max = anioMax + "-" + mesMax + "-" + diaMax;
 
-    //Repetimos el mismo proceso pero para poner el maximo de edad en 100 años
+    //Repetimos el mismo proceso pero para poner el máximo de edad en 100 años
     var fechaMin = new Date(hoy);
     fechaMin.setFullYear(fechaMin.getFullYear() - 100);
     var anioMin = fechaMin.getFullYear();
