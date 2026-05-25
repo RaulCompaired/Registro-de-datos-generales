@@ -33,7 +33,8 @@
         const tel = document.getElementById("telefono").value;
         const campoNacimiento = document.getElementById("nacimiento");
         const generoElemento = document.querySelector('input[name="genero"]:checked');
-        const genero = generoElemento ? generoElemento.id : "No especificado";
+        const genero = generoElemento ? generoElemento.id : null;
+        const generoRadios = document.querySelectorAll('input[name="genero"]');
         const pf = document.getElementById("procedenciafed").value;
         let ep = document.getElementById("escuelap").value;
         if (ep === "Otro") ep = document.getElementById("nombreesc").value;
@@ -44,6 +45,8 @@
 
         marcarCampo("procedenciafed", pf ? pf : null);
         marcarCampo("escuelap", ep ? ep : null);
+
+
         if (document.getElementById("escuelap").value === "Otro") {
             marcarCampo("nombreesc", ep ? ep : null);
         } else {
@@ -62,6 +65,17 @@
         if(rescorreo == null) errores.push("Correo inválida");
 
         if(respass == null) errores.push("Contraseña inválida");
+
+        if (genero == null) errores.push("Debes elegir un genero");
+        generoRadios.forEach(function(radio) {
+            if (genero == null) {
+                radio.classList.add("is-invalid");
+                radio.classList.remove("is-valid");
+            } else {
+                radio.classList.remove("is-invalid");
+                radio.classList.add("is-valid");
+            }
+        });
 
         if (!nacim) errores.push("Debes elegir una fecha de nacimiento");
 
