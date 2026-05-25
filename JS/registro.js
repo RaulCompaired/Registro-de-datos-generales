@@ -36,6 +36,14 @@
         const pf = document.getElementById("procedenciafed").value;
         let ep = document.getElementById("escuelap").value;
         if (ep === "Otro") ep = document.getElementById("nombreesc").value;
+
+        marcarCampo("procedenciafed", pf ? pf : null);
+        marcarCampo("escuelap", ep ? ep : null);
+        if (document.getElementById("escuelap").value === "Otro") {
+            marcarCampo("nombreesc", ep ? ep : null);
+        } else {
+            marcarCampo("nombreesc", "ok");
+        }
         
 
         if(resboleta == null)  errores.push("Boleta inválida");
@@ -49,6 +57,10 @@
         if(rescorreo == null) errores.push("Correo inválida");
 
         if(respass == null) errores.push("Contraseña inválida");
+
+        if (!pf) errores.push("Debes elegir una entidad federativa");
+
+        if (!ep) errores.push("Debes elegir una escuela de procedencia");
 
         const listaModal = document.getElementById("modalp");  
 
