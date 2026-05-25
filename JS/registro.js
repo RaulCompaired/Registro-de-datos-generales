@@ -31,11 +31,16 @@
         const nacim = document.getElementById("nacimiento").value;
         const prom = document.getElementById("promedio").value;
         const tel = document.getElementById("telefono").value;
+        const campoNacimiento = document.getElementById("nacimiento");
         const generoElemento = document.querySelector('input[name="genero"]:checked');
         const genero = generoElemento ? generoElemento.id : "No especificado";
         const pf = document.getElementById("procedenciafed").value;
         let ep = document.getElementById("escuelap").value;
         if (ep === "Otro") ep = document.getElementById("nombreesc").value;
+
+        const fechaNacimientoValida = nacim && nacim >= campoNacimiento.min && nacim <= campoNacimiento.max;
+
+        marcarCampo("nacimiento", fechaNacimientoValida ? "ok" : null);
 
         marcarCampo("procedenciafed", pf ? pf : null);
         marcarCampo("escuelap", ep ? ep : null);
@@ -57,6 +62,10 @@
         if(rescorreo == null) errores.push("Correo inválida");
 
         if(respass == null) errores.push("Contraseña inválida");
+
+        if (!nacim) errores.push("Debes elegir una fecha de nacimiento");
+
+        if (nacim && !fechaNacimientoValida) errores.push("La fecha de nacimiento debe estar entre 16 y 100 años");
 
         if (!pf) errores.push("Debes elegir una entidad federativa");
 
