@@ -60,7 +60,9 @@
         
         if(resnombre == null)  errores.push("Nombre inválida");
         
-        if(restel == null)  errores.push("Telefono inválida");      
+        if(restel == null)  errores.push("Telefono inválida");  
+        
+        if(rescalif == null)  errores.push("Promedio inválida");    
         
         if(rescorreo == null) errores.push("Correo inválida");
 
@@ -88,23 +90,37 @@
         const listaModal = document.getElementById("modalp");  
 
          if (errores.length > 0) {
-            document.getElementById("modalp").innerHTML = "<li class='list-group-item list-group-item-danger'>Los datos ingresados son inválidos</li>";
+
+            document.getElementById("modalmsg").textContent = "Revisa tus datos, hay errores en el formulario:";
+
+            document.getElementById("modalp").innerHTML = ""; // Limpiar errores anteriores
+            document.getElementById("modalp").innerHTML += errores.map(function(error) {
+                return "<li class='list-group-item list-group-item-danger'>" + error + "</li>";
+            }).join('');
+
+            document.getElementById("botones").innerHTML =
+            "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>";
             var miModalErrores = new bootstrap.Modal(document.getElementById('modalform'));
             miModalErrores.show();
         } 
         else {
+
+        document.getElementById("modalmsg").textContent = "Hola " + nombrev + ", por favor confirma que tus datos son correctos:";
         document.getElementById("modalp").innerHTML = 
-            "<li class='list-group-item'>No. Boleta: " + boletav + "</li>" +
-            "<li class='list-group-item'>Nombre: " + nombrev + "</li>" +
-            "<li class='list-group-item'>Fecha de Nacimiento: " + nacim + "</li>" +
-            "<li class='list-group-item'>Género: " + genero + "</li>" +
-            "<li class='list-group-item'>CURP: " + curpv + "</li>" +
-            "<li class='list-group-item'>Entidad Federativa: " + pf + "</li>" +
-            "<li class='list-group-item'>Telefono: " + tel + "</li>" +
-            "<li class='list-group-item'>Escuela de Procedencia: " + ep + "</li>" +
-            "<li class='list-group-item'>Promedio: " + prom + "</li>" +
-            "<li class='list-group-item'>Correo: " + correov + "</li>" +
-            "<li class='list-group-item'>Contraseña: " + passwordv + "</li>";
+            "<li class='list-group-item'><strong>No. Boleta:</strong> " + boletav + "</li>" +
+            "<li class='list-group-item'><strong>Fecha de Nacimiento:</strong> " + nacim + "</li>" +
+            "<li class='list-group-item'><strong>Género:</strong> " + genero + "</li>" +
+            "<li class='list-group-item'><strong>CURP:</strong> " + curpv + "</li>" +
+            "<li class='list-group-item'><strong>Entidad Federativa:</strong> " + pf + "</li>" +
+            "<li class='list-group-item'><strong>Telefono:</strong> " + tel + "</li>" +
+            "<li class='list-group-item'><strong>Escuela de Procedencia:</strong> " + ep + "</li>" +
+            "<li class='list-group-item'><strong>Promedio:</strong> " + prom + "</li>" +
+            "<li class='list-group-item'><strong>Correo:</strong> " + correov + "</li>" +
+            "<li class='list-group-item'><strong>Contraseña:</strong> " + passwordv + "</li>";
+
+            document.getElementById("botones").innerHTML =
+            "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Editar</button>" +
+            "<button type='button' class='btn btn-primary' id='confirmar'>Confirmar</button>";
 
         var miModal = new bootstrap.Modal(document.getElementById('modalform'));
         miModal.show();
