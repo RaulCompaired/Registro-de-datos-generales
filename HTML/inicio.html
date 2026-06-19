@@ -17,6 +17,8 @@
     <!--Mi CSS-->
     <link rel="stylesheet" href="../CSS/header.css">
     <link rel="stylesheet" href="../CSS/inicio.css">
+        <link rel="stylesheet" href="../CSS/letras.css">
+
 
     <!--Se puede agregar scripts también aqui-->
 </head>
@@ -66,11 +68,7 @@
                         <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
                     </li>
 
-                    <!--Item de navegación que lleva a la página de Admin-->
-                    <li class="nav-item active mx-4">
-                        <a class="nav-link" href="loginadmin.html">Admin</a>
-                    </li>
-
+                 
                     <!--Item de navegación que lleva a la página de Cuenta-->
                     <li class="nav-item active mx-4">
                         <a class="nav-link" href="logincuenta.html">Cuenta</a>
@@ -89,11 +87,11 @@
         <!--Carrusel de noticial/Actividades-->
 
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <ol class="carousel-indicators">
+            <ul class="carousel-indicators" style = "list-style: none;">
                 <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
                 <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
                 <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-            </ol>
+            </ul>
             <div class="carousel-inner">
                 <!--RESULTADOS DE BECAS-->
                 <div class="carousel-item active">
@@ -123,11 +121,11 @@
             <!--BOTONES DE SLIDE PREVIO/SIGUIENTE DEL CAROUSEL-->
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
+                <span class="sr-only"><<<<<</span>
             </a>
             <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
+                <span class="sr-only">>>>></span>
             </a>
         </div>
         <!--Fin del carrousel de Noticias-->

@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* 1. REGLA GLOBAL: Obliga a que absolutamente todo el header use Barlow */
+.header-principal, 
+.header-principal h1, 
+.header-principal strong, 
+.header-principal a, 
+.header-principal li {
+    font-family: 'Barlow', sans-serif !important;
+    font-size: 30px !important;
+}
 
 #header .navbar {
     background-image: url('../imagenes/header_blanco.jpg'); 
@@ -6,30 +17,33 @@
     background-repeat: no-repeat; 
 }
 
-#header h1{
-    font-family:'Times New Roman', Times, serif;
-    color: #800000;
+section {
+ min-height: 100vh;
 }
 
-/*Clase para modificar el backgroun del navbar*/
-.header-principal .navbar{
-	background: rgb(0, 108, 161);
-	background: linear-gradient(180deg, rgba(0,85,128,1) 0%, rgba(0,102,153,1) 75%, rgba(0,153,230,1) 100%);
+#header h1 {
+    color: #9c0000;
 }
 
-/*Clase header principal estilos aplicados a los <li> y a los <a>*/
+/* Clase para modificar el background del navbar */
+.header-principal .navbar {
+    background: rgb(0, 108, 161);
+    background: linear-gradient(180deg, rgba(0,85,128,1) 0%, rgba(0,102,153,1) 75%, rgba(0,153,230,1) 100%);
+}
+
+/* Tamaño de los enlaces en el navbar azul */
 .header-principal :is(li,a) {
     font-size: 35px;
-    font-family: 'Times New Roman', Times, serif;
 }
 
 #carouselExampleIndicators img {
-    height: 450px; /* Define aquí la altura fija que quieres para tu slider */
-    width: 100%; /* Asegura que abarque todo el ancho de la pantalla */
-    object-fit: contain; /* La magia: recorta la imagen proporcionalmente para que encaje en los 450px */
-    background-color:aliceblue ;
+    height: 450px; 
+    width: 100%; 
+    object-fit: contain; 
+    background-color: aliceblue;
+
 }
 
-.fondo-guinda{
+.fondo-guinda {
     background-color: #6C1D45 !important;
 }

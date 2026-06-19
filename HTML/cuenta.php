@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
-<!--Cabecera de la página-->
+<?php
+session_start();
+
+// Verificamos si la variable 'usuario' NO está definida
+if (!isset($_SESSION['usuario'])) {
+    // Si no ha iniciado sesión, lo mandamos al login de manera segura
+    header("Location: logincuenta.html");
+    exit;
+}
+?>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="descripcion" content="Página del administrador">
-    <title>ADMINISTRADOR</title>
+    <meta name="descripcion" content="Página de cuenta">
+    <title>CUENTA</title>
 
     <!--ícono donde estaba el mundito-->
     <link rel="icon" href="../imagenes/LogoEquipo.jpg" type="image/png">
@@ -16,7 +25,9 @@
 
     <!--Mi CSS-->
     <link rel="stylesheet" href="../CSS/header.css">
-    <link rel="stylesheet" href="../CSS/admin.css">
+    <link rel="stylesheet" href="../CSS/cuenta.css">
+        <link rel="stylesheet" href="../CSS/letras.css">
+
 
     <!--Se puede agregar scripts también aqui-->
 </head>
@@ -24,7 +35,6 @@
 <!--Cuerpo del programa (contenido de la página)-->
 
 <body>
-
 
     <!--Encabezado de la página-->
     <header class="header-principal">
@@ -67,10 +77,7 @@
                         <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
                     </li>
 
-                    <!--Item de navegación que lleva a la página de Admin-->
-                    <li class="nav-item active mx-4">
-                        <a class="nav-link" href="loginadmin.html">Admin</a>
-                    </li>
+                    
 
                     <!--Item de navegación que lleva a la página de Cuenta-->
                     <li class="nav-item active mx-4">
@@ -84,15 +91,18 @@
 
     </header>
 
-
     <!--Contenido Principal-->
     <main class="container my-5">
-        
-        <h1>¡BIENVENIDOS A LA PÁGINA DEL ADMINISTRADOR!</h1>
+
 
     </main>
     <!--Fin del contenido principal-->
+<section class="container my-5">
+    <h1>¡BIENVENIDOS A LA PÁGINA DEL USUARIO!</h1>
 
+    <h1>Hola, <?php echo $_SESSION['usuario']; ?>. ¡Bienvenido a tu panel de control!</h1>
+    <p>Tu boleta es: <?php echo $_SESSION['boleta']; ?></p>
+</section>
 
     <!--FOOTER-->
     <div class="bg-dark text-white pt-4 pb-2 mt-5">
@@ -162,7 +172,12 @@
 
 
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
+    
 
 </body>
 
 </html>
+
+
+
+    <a href="logout.php">Cerrar Sesión</a>

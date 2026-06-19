@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
-<!--Cabecera de la página-->
+<?php
+session_start();
+
+// Verificamos si la variable 'usuario' NO está definida
+if (!isset($_SESSION['usuario'])) {
+    // Si no ha iniciado sesión, lo mandamos al login de manera segura
+    header("Location: logincuenta.html");
+    exit;
+}
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -17,6 +26,8 @@
     <!--Mi CSS-->
     <link rel="stylesheet" href="../CSS/header.css">
     <link rel="stylesheet" href="../CSS/cuenta.css">
+        <link rel="stylesheet" href="../CSS/letras.css">
+
 
     <!--Se puede agregar scripts también aqui-->
 </head>
@@ -66,10 +77,7 @@
                         <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
                     </li>
 
-                    <!--Item de navegación que lleva a la página de Admin-->
-                    <li class="nav-item active mx-4">
-                        <a class="nav-link" href="loginadmin.html">Admin</a>
-                    </li>
+                    
 
                     <!--Item de navegación que lleva a la página de Cuenta-->
                     <li class="nav-item active mx-4">
@@ -91,6 +99,9 @@
     <!--Fin del contenido principal-->
 
     <h1>¡BIENVENIDOS A LA PÁGINA DEL USUARIO!</h1>
+
+    <h1>Hola, <?php echo $_SESSION['usuario']; ?>. ¡Bienvenido a tu panel de control!</h1>
+    <p>Tu boleta es: <?php echo $_SESSION['boleta']; ?></p>
 
 
     <!--FOOTER-->
@@ -161,7 +172,12 @@
 
 
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
+    
 
 </body>
 
 </html>
+
+
+
+    <a href="logout.php">Cerrar Sesión</a>

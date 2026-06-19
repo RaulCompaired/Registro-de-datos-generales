@@ -17,6 +17,8 @@
     <!--Mi CSS-->
     <link rel="stylesheet" href="../CSS/header.css">
     <link rel="stylesheet" href="../CSS/cuenta.css">
+    <link rel="stylesheet" href="../CSS/letras.css">
+
 
     <!--Se puede agregar scripts también aqui-->
 </head>
@@ -66,11 +68,7 @@
                         <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
                     </li>
 
-                    <!--Item de navegación que lleva a la página de Admin-->
-                    <li class="nav-item active mx-4">
-                        <a class="nav-link" href="loginadmin.html">Admin</a>
-                    </li>
-
+        
                     <!--Item de navegación que lleva a la página de Cuenta-->
                     <li class="nav-item active mx-4">
                         <a class="nav-link" href="logincuenta.html">Cuenta</a>
@@ -95,10 +93,10 @@
                     </div>
 
                     <div class="card-body p-4 p-md-5">
-                        <form name="datos">
+                        <form name="datos" method="post" action="../PHP/sesion.php" id="loginForm">
                             <div class="mb-3">
-                                <label for="boleta" class="form-label fw-bold">Boleta</label>
-                                <input type="text" class="form-control" id="boleta" name="boleta">
+                                <label for="correo" class="form-label fw-bold">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="correo" name="correo">
                             </div>
 
                             <div class="mb-3">
@@ -108,8 +106,7 @@
 
                             <div class="d-grid">
                                 <div class="d-grid">
-                                    <button type="button" class="btn text-white btn-lg fondo-guinda"
-                                        onclick="validarlogin('cuenta.html')">Ingresar</button>
+                                    <button type="button" onclick="validarlogin()" class="btn text-white btn-lg fondo-guinda">Ingresar</button>
                                 </div>
                             </div>
                         </form>
@@ -191,7 +188,10 @@
 
 
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../JS/login.js"></script>
+
+    
 
 </body>
 

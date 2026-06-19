@@ -1,27 +1,70 @@
-function validarlogin(destino){
-        var errores = [];
-        var boletav = document.forms.datos.boleta.value;
-        var resboleta = boletav.match(/^\d{10}$|^(PE|PP)\d{8}$/);
-        marcarCampo("boleta", resboleta);
+function validarlogin(destino) {
+    var errores = [];
+    var correov = document.forms.datos.correo.value;
+    var rescorreo = correov.match(/^[A-Za-z0-9_.]+(@alumno.ipn.mx$ || @administrador.ipn.mx$)/);
+    marcarCampo("correo", rescorreo);
 
-        var passwordv = document.forms.datos.password.value;
-        var respassword = passwordv.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9\s]).{6,}$/);
-        marcarCampo("password", respassword);
+    var passwordv = document.forms.datos.password.value;
+    var respassword = passwordv.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9\s]).{6,}$/);
+    marcarCampo("password", respassword);
 
-        if(resboleta == null)  errores.push("Boleta inválida");
-        if(respassword == null) errores.push("Contraseña inválida");
+    if (rescorreo == null) errores.push("Correo inválido");
+    if (respassword == null) errores.push("Contraseña inválida");
 
-        if (errores.length > 0) {
-            // Si hay errores, solo mostramos la alerta y el código se detiene aquí. No avanza.
-            alert("Los datos son inválidos.");
-        } else {
-            // Si no hay errores, mostramos el éxito y redirigimos a la cuenta
-            alert("¡Inicio de sesión exitoso!");
-            window.location.href = destino; 
-        }
+    if (errores.length > 0) {
+        Swal.fire({
+            title: 'Error',
+            text: 'Errores encontrados:\n' + errores.join('\n'),
+            icon: 'error',
+            confirmButtonColor: '#800020'
+        });
+
 
     }
-    function marcarCampo(id, resultado) {
+
+    else {
+
+            var formulario = document.forms.datos;
+            const datosFormulario = new FormData(formulario);
+
+            fetch('../PHP/sesion.php', {
+                method: 'POST',
+                body: datosFormulario
+            })
+                .then(respuesta => respuesta.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                            Swal.fire({
+                                title: '¡Bienvenidoooo!',
+                                text: 'Iniciando sesión...',
+                                icon: 'success',
+                                timer: 1500, 
+                                showConfirmButton: false // Esconde el botón para que sea más fluido
+                            }).then(() => {
+                                window.location.href = data.redirect;
+                            });
+                        
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonColor: '#800020'
+                        });
+                    }
+                })
+                .catch(error => console.error("Error en la petición:", error));
+        }
+
+
+    }
+
+
+
+
+
+
+function marcarCampo(id, resultado) {
     var campo = document.getElementById(id);
     if (resultado == null) {
         campo.classList.add("is-invalid");
@@ -30,5 +73,7 @@ function validarlogin(destino){
         campo.classList.remove("is-invalid");
         campo.classList.add("is-valid");
     }
-    }
-    
+}
+
+
+

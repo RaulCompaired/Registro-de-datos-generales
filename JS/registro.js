@@ -120,7 +120,7 @@
 
             document.getElementById("botones").innerHTML =
             "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Editar</button>" +
-            "<button type='button' class='btn btn-primary' id='confirmar'>Confirmar</button>";
+            "<button type='submit' form='registroForm' class='btn btn-primary'>Confirmar registro</button>";
 
         var miModal = new bootstrap.Modal(document.getElementById('modalform'));
         miModal.show();
