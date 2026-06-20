@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <?php
 session_start();
+require '../PHP/conexion.php';
 
-// Verificamos si la variable 'usuario' NO está definida
+// Validar que exista una sesión
 if (!isset($_SESSION['usuario'])) {
-    // Si no ha iniciado sesión, lo mandamos al login de manera segura
-    header("Location: logincuenta.html");
+    header("Location: ../HTML/logincuenta.html");
     exit;
 }
+
+// Consultamos a todos los alumnos registrados
+$consulta = mysqli_query($conexion, "SELECT boleta, nombre, fecha_nacimiento,genero,curp, entidad_federativa,escuela_procedencia, promedio FROM alumnos_nuevo_ingreso");
 ?>
 
 <head>
@@ -17,7 +21,6 @@ if (!isset($_SESSION['usuario'])) {
     <meta name="descripcion" content="Página de cuenta">
     <title>CUENTA</title>
 
-    <!--ícono donde estaba el mundito-->
     <link rel="icon" href="../imagenes/LogoEquipo.jpg" type="image/png">
 
     <!--Bootstrap-->
@@ -87,22 +90,121 @@ if (!isset($_SESSION['usuario'])) {
                 </ul>
             </div>
         </nav>
-        <!--Fin de ejemplo de encabezado-->
 
     </header>
 
     <!--Contenido Principal-->
-    <main class="container my-5">
+    <div class="card shadow-lg border-0 bg-white p-4 my-5 mx-auto" style="border-radius: 20px; max-width: 95%;">
+    
+    <div class="card-header bg-white border-0 pt-3 pb-4">
+        <h3 class="fw-bold mb-1" style="color: #005580; font-size: 2rem;">Alumnos</h3>
+        <p class="text-muted mb-0" style="font-size: 1.1rem;">Modificación de datos</p>
+    </div>
 
+    <div class="card-body p-0 table-responsive">
+        <table class="table table-hover align-middle mb-0" style="font-size: 1.1rem; min-width: 800px;">
+            
+            <thead>
+                <tr class="bg-primary">
+                    <th class="text-black border-0 py-4 px-4" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px;">Boleta</th>
+                    <th class="text-black border-0 py-4 px-3">Nombre</th>
+                    <th class="text-black border-0 py-4 px-3">Fecha de Nacimiento</th>
+                    <th class="text-black border-0 py-4 px-3">Género</th>
+                    <th class="text-black border-0 py-4 px-3">CURP</th>
+                    <th class="text-black border-0 py-4 px-3">Entidad Federativa</th>
+                    <th class="text-black border-0 py-4 px-3">Escuela de Procedencia</th>
+                    <th class="text-black border-0 py-4 px-3">Promedio</th>
+                    <th class="text-black border-0 py-4 px-4 text-center" style="border-top-right-radius: 12px; border-bottom-right-radius: 12px;">Acciones</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <?php while ($fila = mysqli_fetch_assoc($consulta)) { ?>
+                <tr style="height: 75px; transition: background-color 0.2s ease;">
+                    <td class="px-4 fw-bold" style="color: #005580;"><?php echo $fila['boleta']; ?></td>
+                    <td class="px-3 fw-semibold text-dark"><?php echo $fila['nombre']; ?></td>
+                    <td class="px-3 text-secondary"><?php echo $fila['fecha_nacimiento']; ?></td>
+                    <td class="px-3 text-secondary"><?php echo $fila['genero']; ?></td>
+                    <td class="px-3 text-secondary"><?php echo $fila['curp']; ?></td>
+                    <td class="px-3 text-secondary"><?php echo $fila['entidad_federativa']; ?></td>
+                    <td class="px-3 text-secondary"><?php echo $fila['escuela_procedencia']; ?></td>
+                    <td class="px-3">
+                        <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle rounded-pill px-3 py-2 fs-6">
+                            <?php echo $fila['promedio']; ?>
+                        </span>
+                    </td>
+                    <td class="px-4 text-center">
+                        <button class="btn text-white px-4 py-2 rounded-3 fw-bold shadow-sm" 
+                            style="background-color: #006699; border: none; transition: 0.2s;"
+                            onmouseover="this.style.backgroundColor='#005580'" 
+                            onmouseout="this.style.backgroundColor='#006699'"
+                            onclick="abrirModal('<?php echo $fila['boleta']; ?>', '<?php echo $fila['nombre']; ?>', '<?php echo $fila['fecha_nacimiento']; ?>', '<?php echo $fila['genero']; ?>', '<?php echo $fila['curp']; ?>', '<?php echo $fila['entidad_federativa']; ?>', '<?php echo $fila['escuela_procedencia']; ?>', '<?php echo $fila['promedio']; ?>')">
+                            Editar
+                        </button>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header fondo-guinda">
+                    <h5 class="modal-title text-white">Modificar Datos del Alumno</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditar">
+                        <input type="hidden" id="editBoleta" name="boleta">
 
-    </main>
-    <!--Fin del contenido principal-->
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del Alumno (Solo lectura)</label>
+                            <input type="text" class="form-control" id="editNombre" readonly>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="editFechaNacimiento" name="fecha_nacimiento">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Género</label>
+                            <select class="form-control" id="editGenero" name="genero">
+                                <option value="Hombre">Hombre</option>
+                                <option value="Mujer">Mujer</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">CURP</label>
+                            <input type="text" class="form-control" id="editCURP" name="curp" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Entidad Federativa</label>
+                            <input type="text" class="form-control" id="editEntidad" name="entidad_federativa">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Escuela de Procedencia</label>
+                            <input type="text" class="form-control" id="editEscuela" name="escuela" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Promedio</label>
+                            <input type="number" step="0.01" class="form-control" id="editPromedio" name="promedio">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" onclick="guardarCambios()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h1>¡BIENVENIDOS A LA PÁGINA DEL USUARIO!</h1>
-
-    <h1>Hola, <?php echo $_SESSION['usuario']; ?>. ¡Bienvenido a tu panel de control!</h1>
-    <p>Tu boleta es: <?php echo $_SESSION['boleta']; ?></p>
-
+   
+    
 
     <!--FOOTER-->
     <div class="bg-dark text-white pt-4 pb-2 mt-5">
@@ -175,9 +277,50 @@ if (!isset($_SESSION['usuario'])) {
     
 
 </body>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function abrirModal(boleta, nombre, fecha_nacimiento, genero, curp, entidad_federativa, escuela, promedio) {
+            document.getElementById('editBoleta').value = boleta;
+            document.getElementById('editNombre').value = nombre;
+            document.getElementById('editFechaNacimiento').value = fecha_nacimiento;
+            document.getElementById('editGenero').value = genero;
+            document.getElementById('editCURP').value = curp;
+            document.getElementById('editEntidad').value = entidad_federativa;
+            document.getElementById('editEscuela').value = escuela;
+            document.getElementById('editPromedio').value = promedio;
+            
+            var myModal = new bootstrap.Modal(document.getElementById('modalEditar'));
+            myModal.show();
+        }
 
+        function guardarCambios() {
+            const formulario = document.getElementById('formEditar');
+            const datos = new FormData(formulario);
+
+            fetch('../PHP/actualizar_alumno.php', {
+                method: 'POST',
+                body: datos
+            })
+            .then(respuesta => respuesta.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    Swal.fire({
+                        title: '¡Actualizado!',
+                        text: 'Los datos se guardaron correctamente.',
+                        icon: 'success',
+                        confirmButtonColor: '#198754'
+                    }).then(() => {
+                        location.reload(); // Recargamos la página para ver los cambios en la tabla
+                    });
+                } else {
+                    Swal.fire('Error', data.message, 'error');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 </html>
 
 
 
-    <a href="logout.php">Cerrar Sesión</a>

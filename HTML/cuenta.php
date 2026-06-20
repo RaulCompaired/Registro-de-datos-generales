@@ -2,13 +2,17 @@
 <html lang="es">
 <?php
 session_start();
+require '../PHP/conexion.php'; 
 
-// Verificamos si la variable 'usuario' NO está definida
 if (!isset($_SESSION['usuario'])) {
-    // Si no ha iniciado sesión, lo mandamos al login de manera segura
-    header("Location: logincuenta.html");
+    header("Location: ../HTML/logincuenta.html");
     exit;
 }
+
+$correo = $_SESSION['correo'];
+$consulta = mysqli_query($conexion, "SELECT * FROM alumnos_nuevo_ingreso WHERE correo = '$correo'");
+
+$alumno = mysqli_fetch_assoc($consulta);
 ?>
 
 <head>
@@ -91,17 +95,58 @@ if (!isset($_SESSION['usuario'])) {
 
     </header>
 
-    <!--Contenido Principal-->
-    <main class="container my-5">
-
-
-    </main>
-    <!--Fin del contenido principal-->
+    
 <section class="container my-5">
-    <h1>¡BIENVENIDOS A LA PÁGINA DEL USUARIO!</h1>
 
-    <h1>Hola, <?php echo $_SESSION['usuario']; ?>. ¡Bienvenido a tu panel de control!</h1>
-    <p>Tu boleta es: <?php echo $_SESSION['boleta']; ?></p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-header fondo-guinda text-center py-4 rounded-top-4">
+                        <h3 class="mb-0 fw-bold">Perfil del Alumno</h3>
+                    </div>
+                    
+                    <div class="card-body p-5">
+                        <h5 class="text-center mb-4">
+                            ¡Hola de nuevo, <strong><?php echo $alumno['nombre']; ?></strong>!
+                        </h5>
+                        <span class="text-muted d-block text-center mb-4"> En caso de error en el registro consulta en Gestión Escolar</span>
+
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span class="text-muted">Boleta</span>
+                                <span class="fw-bold"><?php echo $alumno['boleta']; ?></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span class="text-muted">CURP</span>
+                                <span class="fw-bold text-uppercase"><?php echo $alumno['curp']; ?></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span class="text-muted">Escuela de Procedencia</span>
+                                <span class="fw-bold text-end"><?php echo $alumno['escuela_procedencia']; ?></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span class="text-muted">Promedio</span>
+                                <span class="badge fondo-guinda rounded-pill fs-6"><?php echo $alumno['promedio']; ?></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span class="text-muted">Correo Institucional</span>
+                                <span class="fw-bold"><?php echo $alumno['correo']; ?></span>
+                            </li>
+                        </ul>
+                        <div class="d-grid mt-4">
+                            <a href="" class="btn btn-outline-primary btn-lg">Descargar PDF con la información de tu horario</a>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <a href="../PHP/cerrarsesion.php" class="btn btn-outline-danger btn-lg">Cerrar Sesión</a>
+                        </div>
+                        
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
 </section>
 
     <!--FOOTER-->
@@ -170,14 +215,32 @@ if (!isset($_SESSION['usuario'])) {
     </div>
     <!--FIN DE FOOTER-->
 
-
-    <script src="../bootstrap/bootstrap.bundle.min.js"></script>
-    
-
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+        function mostrarBienvenida() {
+            const usuario = "<?php echo $_SESSION['usuario']; ?>";
+
+            Swal.fire({
+                title: `¡Bienvenido, ${usuario}!`,
+                text: 'Has iniciado sesión correctamente, al dar click en aceptar podrás descargar un PDF con la información de tu horario de examen',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+}
+                });
+            
+        }
+        window.onload = mostrarBienvenida;
+
+</script>
+
+    
 
 </html>
 
 
 
-    <a href="logout.php">Cerrar Sesión</a>
+
