@@ -53,9 +53,12 @@ SELECT
     a.entidad_federativa, 
     a.escuela_procedencia, 
     a.promedio, 
-    g.nombre AS grupo_nombre
+    g.nombre AS grupo_nombre,
+    CONCAT(TIME_FORMAT(g.hora_inicio, '%H:%i'), ' - ', TIME_FORMAT(g.hora_fin, '%H:%i')) AS horario,
+    l.nombre AS laboratorio_nombre
 FROM alumnos a
-LEFT JOIN grupos g ON a.grupo_id = g.id;
+LEFT JOIN grupos g ON a.grupo_id = g.id
+LEFT JOIN laboratorios l ON g.laboratorio_id = l.id;
 
 -- Insertar los 5 laboratorios
 INSERT IGNORE INTO `laboratorios` (`id`, `nombre`) VALUES
