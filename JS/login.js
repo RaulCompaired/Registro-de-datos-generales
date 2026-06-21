@@ -1,10 +1,27 @@
+$(document).ready(function() {
+    // Si ya existe una sesión activa, redirige inmediatamente sin mostrar el formulario
+    $.ajax({
+        url: '../PHP/check_session.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            if (data.logged_in) {
+                window.location.href = data.redirect;
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error al verificar la sesión:", error);
+        }
+    });
+});
+
 function validarlogin(destino) {
     var errores = [];
-    var correov = document.forms.datos.usuario.value.trim();
+    var correov = $("#usuario").val().trim();
     var rescorreo = correov !== "" ? true : null;
     marcarCampo("usuario", rescorreo);
 
-    var passwordv = document.forms.datos.contra.value.trim();
+    var passwordv = $("#contra").val().trim();
     var respassword = passwordv !== "" ? true : null;
     marcarCampo("contra", respassword);
 
@@ -18,32 +35,19 @@ function validarlogin(destino) {
             icon: 'error',
             confirmButtonColor: '#800020'
         });
+    } else {
+        // Obtenemos los datos del formulario de manera serializada con jQuery
+        var datosFormulario = $("#loginForm").serialize();
 
-
-    }
-
-    else {
-
-        var formulario = document.forms.datos;
-        const datosFormulario = new FormData(formulario);
-
-        fetch('../PHP/sesion.php', {
-            method: 'POST',
-            body: datosFormulario
-        })
-            .then(respuesta => respuesta.json())
-            .then(data => {
+        $.ajax({
+            url: '../PHP/sesion.php',
+            type: 'POST',
+            data: datosFormulario,
+            dataType: 'json',
+            success: function(data) {
                 if (data.status === 'success') {
-                    Swal.fire({
-                        title: '¡Bienvenidoooo!',
-                        text: 'Iniciando sesión...',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false // Esconde el botón para que sea más fluido
-                    }).then(() => {
-                        window.location.href = data.redirect;
-                    });
-
+                    // Redirección instantánea sin doble alerta ni retardo artificial
+                    window.location.href = data.redirect;
                 } else {
                     Swal.fire({
                         title: 'Error',
@@ -54,37 +58,36 @@ function validarlogin(destino) {
                     if (typeof grecaptcha !== 'undefined') {
                         grecaptcha.reset();
                     }
-                    document.getElementById("btn-ingresar").disabled = true;
+                    $("#btn-ingresar").prop("disabled", true);
                 }
-            })
-            .catch(error => {
-                console.error("Error en la petición:", error);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la petición AJAX:", error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ocurrió un problema al conectar con el servidor.',
+                    icon: 'error',
+                    confirmButtonColor: '#800020'
+                });
                 if (typeof grecaptcha !== 'undefined') {
                     grecaptcha.reset();
                 }
-                document.getElementById("btn-ingresar").disabled = true;
-            });
+                $("#btn-ingresar").prop("disabled", true);
+            }
+        });
     }
-
-
 }
 
 function marcarCampo(id, resultado) {
-    var campo = document.getElementById(id);
+    var $campo = $("#" + id);
     if (resultado == null) {
-        campo.classList.add("is-invalid");
-        campo.classList.remove("is-valid");
+        $campo.addClass("is-invalid").removeClass("is-valid");
     } else {
-        campo.classList.remove("is-invalid");
-        campo.classList.add("is-valid");
+        $campo.removeClass("is-invalid").addClass("is-valid");
     }
 }
 
-// Callback functions for reCAPTCHA
+// Callback para habilitar el botón desde reCAPTCHA
 function enableBtn() {
-    document.getElementById("btn-ingresar").disabled = false;
+    $("#btn-ingresar").prop("disabled", false);
 }
-
-
-
-
