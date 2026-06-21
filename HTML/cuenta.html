@@ -1,19 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php
-session_start();
-require '../PHP/conexion.php'; 
-
-if (!isset($_SESSION['usuario'])) {
-    header("Location: ../HTML/logincuenta.html");
-    exit;
-}
-
-$correo = $_SESSION['correo'];
-$consulta = mysqli_query($conexion, "SELECT * FROM alumnos_nuevo_ingreso WHERE correo = '$correo'");
-
-$alumno = mysqli_fetch_assoc($consulta);
-?>
 
 <head>
     <meta charset="UTF-8">
@@ -30,15 +16,11 @@ $alumno = mysqli_fetch_assoc($consulta);
     <!--Mi CSS-->
     <link rel="stylesheet" href="../CSS/header.css">
     <link rel="stylesheet" href="../CSS/cuenta.css">
-        <link rel="stylesheet" href="../CSS/letras.css">
-
-
-    <!--Se puede agregar scripts también aqui-->
+    <link rel="stylesheet" href="../CSS/letras.css">
 </head>
 
-<!--Cuerpo del programa (contenido de la página)-->
-
-<body>
+<!--Cuerpo del programa (contenido de la página) - oculto por defecto para evitar parpadeos de sesión -->
+<body style="display: none;">
 
     <!--Encabezado de la página-->
     <header class="header-principal">
@@ -81,8 +63,6 @@ $alumno = mysqli_fetch_assoc($consulta);
                         <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
                     </li>
 
-                    
-
                     <!--Item de navegación que lleva a la página de Cuenta-->
                     <li class="nav-item active mx-4">
                         <a class="nav-link" href="logincuenta.html">Cuenta</a>
@@ -107,41 +87,8 @@ $alumno = mysqli_fetch_assoc($consulta);
                         <h3 class="mb-0 fw-bold">Perfil del Alumno</h3>
                     </div>
                     
-                    <div class="card-body p-5">
-                        <h5 class="text-center mb-4">
-                            ¡Hola de nuevo, <strong><?php echo $alumno['nombre']; ?></strong>!
-                        </h5>
-                        <span class="text-muted d-block text-center mb-4"> En caso de error en el registro consulta en Gestión Escolar</span>
-
-                        <ul class="list-group list-group-flush mb-4">
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <span class="text-muted">Boleta</span>
-                                <span class="fw-bold"><?php echo $alumno['boleta']; ?></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <span class="text-muted">CURP</span>
-                                <span class="fw-bold text-uppercase"><?php echo $alumno['curp']; ?></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <span class="text-muted">Escuela de Procedencia</span>
-                                <span class="fw-bold text-end"><?php echo $alumno['escuela_procedencia']; ?></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <span class="text-muted">Promedio</span>
-                                <span class="badge fondo-guinda rounded-pill fs-6"><?php echo $alumno['promedio']; ?></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                <span class="text-muted">Correo Institucional</span>
-                                <span class="fw-bold"><?php echo $alumno['correo']; ?></span>
-                            </li>
-                        </ul>
-                        <div class="d-grid mt-4">
-                            <a href="" class="btn btn-outline-primary btn-lg">Descargar PDF con la información de tu horario</a>
-                        </div>
-                        <div class="d-grid mt-4">
-                            <a href="../PHP/cerrarsesion.php" class="btn btn-outline-danger btn-lg">Cerrar Sesión</a>
-                        </div>
-                        
+                    <div class="card-body p-5" id="perfil-card-body">
+                         <!-- Cargado dinámicamente desde get_alumno_perfil.php -->
                     </div>
                 </div>
                 </div>
@@ -215,32 +162,43 @@ $alumno = mysqli_fetch_assoc($consulta);
     </div>
     <!--FIN DE FOOTER-->
 
+    <!--Scripts-->
+    <script src="../JS/jquery-4.0.0.min.js"></script>
+    <script src="../bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Verificar la sesión primero
+            $.ajax({
+                url: '../PHP/check_session.php',
+                type: 'GET',
+                success: function(role) {
+                    if (role.trim() === 'alumno') {
+                        // Cargar perfil inyectando el HTML directo de PHP
+                        $('#perfil-card-body').load('../PHP/get_alumno_perfil.php', function() {
+                            $('body').show();
+                            
+                            // Mostrar mensaje de bienvenida leyendo el nombre inyectado
+                            var nombre = $('#alumno-nombre-display').text();
+                            Swal.fire({
+                                title: `¡Bienvenido, ${nombre}!`,
+                                text: 'Has iniciado sesión correctamente, al dar click en aceptar podrás descargar un PDF con la información de tu horario de examen',
+                                icon: 'success',
+                                confirmButtonColor: '#800020',
+                                confirmButtonText: 'Aceptar'
+                            });
+                        });
+                    } else {
+                        // Redirigir al login
+                        window.location.href = 'logincuenta.html';
+                    }
+                },
+                error: function() {
+                    window.location.href = 'logincuenta.html';
+                }
+            });
+        });
+    </script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-        function mostrarBienvenida() {
-            const usuario = "<?php echo $_SESSION['usuario']; ?>";
-
-            Swal.fire({
-                title: `¡Bienvenido, ${usuario}!`,
-                text: 'Has iniciado sesión correctamente, al dar click en aceptar podrás descargar un PDF con la información de tu horario de examen',
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-}
-                });
-            
-        }
-        window.onload = mostrarBienvenida;
-
-</script>
-
-    
-
 </html>
-
-
-
-

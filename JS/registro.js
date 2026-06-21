@@ -120,7 +120,7 @@
 
             document.getElementById("botones").innerHTML =
             "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Editar</button>" +
-            "<button type='submit' form='registroForm' class='btn btn-primary'>Confirmar registro</button>";
+            "<button type='button' onclick='registrarAlumno()' class='btn btn-primary'>Confirmar registro</button>";
 
         var miModal = new bootstrap.Modal(document.getElementById('modalform'));
         miModal.show();
@@ -174,3 +174,48 @@ window.addEventListener('DOMContentLoaded', function() {
     var diaMin = String(fechaMin.getDate()).padStart(2, '0');
     campoNacimiento.min = anioMin + "-" + mesMin + "-" + diaMin;
 });
+
+function registrarAlumno() {
+    // Cerrar el modal de confirmación
+    var modalElement = document.getElementById('modalform');
+    var modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
+
+    var datosFormulario = $("#registroForm").serialize();
+
+    $.ajax({
+        url: '../PHP/insertRegistro.php',
+        type: 'POST',
+        data: datosFormulario,
+        success: function(response) {
+            if (response.trim() === 'success') {
+                Swal.fire({
+                    title: '¡Registro Exitoso!',
+                    text: 'Te has registrado correctamente. Ahora puedes iniciar sesión.',
+                    icon: 'success',
+                    confirmButtonColor: '#800020'
+                }).then(function() {
+                    window.location.href = 'logincuenta.html';
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: response,
+                    icon: 'error',
+                    confirmButtonColor: '#800020'
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error en el registro:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un error de conexión con el servidor.',
+                icon: 'error',
+                confirmButtonColor: '#800020'
+            });
+        }
+    });
+}

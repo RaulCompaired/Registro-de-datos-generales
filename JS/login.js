@@ -3,10 +3,12 @@ $(document).ready(function() {
     $.ajax({
         url: '../PHP/check_session.php',
         type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            if (data.logged_in) {
-                window.location.href = data.redirect;
+        success: function(role) {
+            var r = role.trim();
+            if (r === 'alumno') {
+                window.location.href = '../HTML/cuenta.html';
+            } else if (r === 'admin') {
+                window.location.href = '../HTML/admin.html';
             }
         },
         error: function(xhr, status, error) {
@@ -43,15 +45,16 @@ function validarlogin(destino) {
             url: '../PHP/sesion.php',
             type: 'POST',
             data: datosFormulario,
-            dataType: 'json',
-            success: function(data) {
-                if (data.status === 'success') {
-                    // Redirección instantánea sin doble alerta ni retardo artificial
-                    window.location.href = data.redirect;
+            success: function(response) {
+                var res = response.trim();
+                if (res === 'alumno') {
+                    window.location.href = '../HTML/cuenta.html';
+                } else if (res === 'admin') {
+                    window.location.href = '../HTML/admin.html';
                 } else {
                     Swal.fire({
                         title: 'Error',
-                        text: data.message,
+                        text: res,
                         icon: 'error',
                         confirmButtonColor: '#800020'
                     });

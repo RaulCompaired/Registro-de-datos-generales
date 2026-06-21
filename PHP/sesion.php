@@ -22,8 +22,11 @@ $buscar_alumno = mysqli_query($conexion, "SELECT * FROM alumnos_nuevo_ingreso WH
 if ($user = mysqli_fetch_assoc($buscar_alumno)) {
     if (password_verify($pass, $user['contrasena'])) {
         $_SESSION['boleta'] = $user['boleta'];
-        $_SESSION['redirect'] = '../HTML/cuenta.php';
-        echo json_encode(['status' => 'success', 'redirect' => '../HTML/cuenta.php']);
+        $_SESSION['usuario'] = $user['nombre'];
+        $_SESSION['correo'] = $user['correo'];
+        $_SESSION['role'] = 'alumno';
+        $_SESSION['redirect'] = '../HTML/cuenta.html';
+        echo "alumno";
         exit;
     }
 }
@@ -34,12 +37,13 @@ $buscar_admin = mysqli_query($conexion, "SELECT * FROM admin WHERE usuario = '$u
 if ($user = mysqli_fetch_assoc($buscar_admin)) {
     if (password_verify($pass, $user['contrasena'])) {
         $_SESSION['usuario'] = $user['usuario'];
-        $_SESSION['redirect'] = '../HTML/admin.php';
-        echo json_encode(['status' => 'success', 'redirect' => '../HTML/admin.php']);
+        $_SESSION['role'] = 'admin';
+        $_SESSION['redirect'] = '../HTML/admin.html';
+        echo "admin";
         exit;
     }
 }
 
 // 3. Si no entró a ningún IF, los datos están mal
-echo json_encode(['status' => 'error', 'message' => 'Usuario o contraseña incorrectos']);
+echo "Usuario o contraseña incorrectos";
 ?>
