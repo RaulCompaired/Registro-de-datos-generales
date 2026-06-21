@@ -19,17 +19,18 @@ CREATE TABLE IF NOT EXISTS `grupos` (
     `hora_inicio` TIME NOT NULL,
     `hora_fin` TIME NOT NULL,
     `limite_alumnos` INT DEFAULT 30,
+    `inscritos` INT DEFAULT 0,
     FOREIGN KEY (`laboratorio_id`) REFERENCES `laboratorios` (`id`) ON DELETE CASCADE
 );
 
 -- Crear tabla de alumnos
-CREATE TABLE IF NOT EXISTS `alumnos_nuevo_ingreso` (
+CREATE TABLE IF NOT EXISTS `alumnos` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `boleta` VARCHAR(10) NOT NULL UNIQUE,
     `nombre` VARCHAR(150) NOT NULL,
     `fecha_nacimiento` DATE NOT NULL,
     `genero` VARCHAR(20) NOT NULL,
-    `curp` VARCHAR(18) NOT NULL UNIQUE,
+    `curp` VARCHAR(18) NOT NULL,
     `entidad_federativa` VARCHAR(50) NOT NULL,
     `escuela_procedencia` VARCHAR(100) NOT NULL,
     `nombre_escuela` VARCHAR(150) NOT NULL,
@@ -77,3 +78,122 @@ INSERT IGNORE INTO `grupos` (`id`, `nombre`, `laboratorio_id`, `hora_inicio`, `h
 -- El hash corresponde a 'admin123'
 INSERT IGNORE INTO `admin` (`id`, `usuario`, `contrasena`) VALUES
 (1, 'admin', '$2y$10$wRtfP32B66qUj4F2o1sQeOcrk/K/H/7lG62Llyz8zGheK5v/L1pPe');
+
+
+
+
+
+-- TRIGGERS DE VALIDACION DE DATOS
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS `sp_validar_alumno`//
+
+CREATE PROCEDURE `sp_validar_alumno`(
+    IN p_boleta VARCHAR(10),
+    IN p_nombre VARCHAR(150),
+    IN p_fecha_nacimiento DATE,
+    IN p_curp VARCHAR(18),
+    IN p_promedio DECIMAL(4, 2),
+    IN p_correo VARCHAR(100),
+    IN p_telefono VARCHAR(15)
+)
+BEGIN
+    -- Validar boleta
+    IF p_boleta NOT REGEXP '^[0-9]{10}$|^(PE|PP)[0-9]{8}$' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El numero de boleta no es valido (debe tener 10 digitos o comenzar con PE/PP seguido de 8 digitos).';
+    END IF;
+
+    -- Validar curp
+    IF p_curp NOT REGEXP BINARY '^[A-Z]{4}[0-9]{6}(H|M)[A-Z]{5}([0-9]{2}|[A-Z][0-9])$' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El CURP no es valido.';
+    END IF;
+
+    -- Validar nombre
+    IF p_nombre NOT REGEXP BINARY '^[A-Z][a-z]+ [A-Z][a-z]+( |[A-Z a-z])*$' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El nombre no es valido (debe iniciar con mayusculas y contener al menos nombre y apellido).';
+    END IF;
+
+    -- Validar telefono
+    IF p_telefono IS NOT NULL AND p_telefono != '' AND p_telefono NOT REGEXP '^[0-9]{10}$' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El telefono debe tener exactamente 10 digitos.';
+    END IF;
+
+    -- Validar promedio
+    IF p_promedio < 6.00 OR p_promedio > 10.00 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El promedio debe ser un valor entre 6.00 y 10.00.';
+    END IF;
+
+    -- Validar correo
+    IF p_correo NOT REGEXP BINARY '^[A-Za-z0-9_\\.]+@alumno\\.ipn\\.mx$' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El correo electronico debe pertenecer al dominio @alumno.ipn.mx.';
+    END IF;
+
+    -- Validar fecha de nacimiento (edad entre 16 y 100 anos)
+    IF p_fecha_nacimiento > DATE_SUB(CURDATE(), INTERVAL 16 YEAR) OR p_fecha_nacimiento < DATE_SUB(CURDATE(), INTERVAL 100 YEAR) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La edad del alumno debe estar entre 16 y 100 anos.';
+    END IF;
+END;
+//
+
+DROP TRIGGER IF EXISTS `trg_validar_alumno_insert`//
+
+CREATE TRIGGER `trg_validar_alumno_insert`
+BEFORE INSERT ON `alumnos`
+FOR EACH ROW
+BEGIN
+    CALL sp_validar_alumno(NEW.boleta, NEW.nombre, NEW.fecha_nacimiento, NEW.curp, NEW.promedio, NEW.correo, NEW.telefono);
+END;
+//
+
+DROP TRIGGER IF EXISTS `trg_validar_alumno_update`//
+
+CREATE TRIGGER `trg_validar_alumno_update`
+BEFORE UPDATE ON `alumnos`
+FOR EACH ROW
+BEGIN
+    CALL sp_validar_alumno(NEW.boleta, NEW.nombre, NEW.fecha_nacimiento, NEW.curp, NEW.promedio, NEW.correo, NEW.telefono);
+END;
+//
+
+DROP TRIGGER IF EXISTS `trg_alumnos_after_insert`//
+
+CREATE TRIGGER `trg_alumnos_after_insert`
+AFTER INSERT ON `alumnos`
+FOR EACH ROW
+BEGIN
+    IF NEW.grupo_id IS NOT NULL THEN
+        UPDATE grupos SET inscritos = inscritos + 1 WHERE id = NEW.grupo_id;
+    END IF;
+END;
+//
+
+DROP TRIGGER IF EXISTS `trg_alumnos_after_update`//
+
+CREATE TRIGGER `trg_alumnos_after_update`
+AFTER UPDATE ON `alumnos`
+FOR EACH ROW
+BEGIN
+    -- Decrementar del grupo anterior si cambia o se quita
+    IF OLD.grupo_id IS NOT NULL AND (NEW.grupo_id IS NULL OR NEW.grupo_id != OLD.grupo_id) THEN
+        UPDATE grupos SET inscritos = GREATEST(0, inscritos - 1) WHERE id = OLD.grupo_id;
+    END IF;
+    -- Incrementar en el nuevo grupo si cambia o se asigna
+    IF NEW.grupo_id IS NOT NULL AND (OLD.grupo_id IS NULL OR NEW.grupo_id != OLD.grupo_id) THEN
+        UPDATE grupos SET inscritos = inscritos + 1 WHERE id = NEW.grupo_id;
+    END IF;
+END;
+//
+
+DROP TRIGGER IF EXISTS `trg_alumnos_after_delete`//
+
+CREATE TRIGGER `trg_alumnos_after_delete`
+AFTER DELETE ON `alumnos`
+FOR EACH ROW
+BEGIN
+    IF OLD.grupo_id IS NOT NULL THEN
+        UPDATE grupos SET inscritos = GREATEST(0, inscritos - 1) WHERE id = OLD.grupo_id;
+    END IF;
+END;
+//
+
+DELIMITER ;
