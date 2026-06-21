@@ -18,7 +18,7 @@ if (!$responseData->success) {
 }
 
 
-$buscar_alumno = mysqli_query($conexion, "SELECT * FROM alumnos_nuevo_ingreso WHERE boleta = '$usuario'");
+$buscar_alumno = mysqli_query($conexion, "SELECT * FROM alumnos WHERE boleta = '$usuario'");
 if ($user = mysqli_fetch_assoc($buscar_alumno)) {
     if (password_verify($pass, $user['contrasena'])) {
         $_SESSION['boleta'] = $user['boleta'];

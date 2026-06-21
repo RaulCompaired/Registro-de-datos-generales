@@ -20,6 +20,7 @@
 </head>
 
 <!--Cuerpo del programa (contenido de la página) - oculto por defecto para evitar parpadeos de sesión -->
+
 <body style="display: none;">
 
     <!--Encabezado de la página-->
@@ -33,7 +34,7 @@
                     </a>
 
                     <div class="m-0 text-center text-wrap">
-                        <h1><strong>¡BIENVENIDOS ALUMNOS DE NUEVO INGRESO!</strong></h1>
+                        <h1><strong>¡BIENVENIDO!</strong></h1>
                     </div>
 
                     <a class="navbar-brand m-0" href="https://www.escom.ipn.mx" target="_blank" rel="noopener">
@@ -58,14 +59,9 @@
                 <ul class="navbar-nav ms-auto">
                     <!--Es la clase de items de la navbar y el mx-4= margen izquierdo y derecho en cada item (1 es mínimo-5 es máximo)-->
 
-                    <!--Item de navegación que lleva a la página de Registro-->
+                    <!--Item de navegación que realiza el cierre de sesión-->
                     <li class="nav-item active mx-4">
-                        <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
-                    </li>
-
-                    <!--Item de navegación que lleva a la página de Cuenta-->
-                    <li class="nav-item active mx-4">
-                        <a class="nav-link" href="logincuenta.html">Cuenta</a>
+                        <a class="nav-link" href="../PHP/cerrarsesion.php">Cerrar Sesión</a>
                     </li>
 
                 </ul>
@@ -75,26 +71,55 @@
 
     </header>
 
-    
-<section class="container my-5">
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                
-                <div class="card shadow-lg border-0 rounded-4">
-                    <div class="card-header fondo-guinda text-center py-4 rounded-top-4">
-                        <h3 class="mb-0 fw-bold">Perfil del Alumno</h3>
-                    </div>
-                    
-                    <div class="card-body p-5" id="perfil-card-body">
-                         <!-- Cargado dinámicamente desde get_alumno_perfil.php -->
+    <section class="container my-5">
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+
+                    <div class="card shadow-lg border-0 rounded-4">
+                        <div class="card-header fondo-guinda text-center py-4 rounded-top-4">
+                            <h3 class="mb-0 fw-bold">Perfil del Alumno</h3>
+                        </div>
+
+                        <div class="card-body p-5" id="perfil-card-body">
+                            <h5 class="text-center mb-4">
+                                ¡Hola de nuevo, <strong id="alumno-nombre-display"></strong>!
+                            </h5>
+                            <span class="text-muted d-block text-center mb-4"> En caso de error en el registro consulta en Gestión Escolar</span>
+
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Boleta</span>
+                                    <span class="fw-bold" id="alumno-boleta"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">CURP</span>
+                                    <span class="fw-bold text-uppercase" id="alumno-curp"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Escuela de Procedencia</span>
+                                    <span class="fw-bold text-end" id="alumno-escuela"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Promedio</span>
+                                    <span class="badge fondo-guinda rounded-pill fs-6" id="alumno-promedio"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Correo Institucional</span>
+                                    <span class="fw-bold" id="alumno-correo"></span>
+                                </li>
+                            </ul>
+                            <div class="d-grid mt-4">
+                                <a href="" class="btn btn-outline-primary btn-lg">Descargar PDF con la información de tu horario</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!--FOOTER-->
     <div class="bg-dark text-white pt-4 pb-2 mt-5">
@@ -126,7 +151,8 @@
                                 target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Programa</a></li>
                         <li class="nav-item mb-2"><a
                                 href="https://www.escom.ipn.mx/nuevoingreso25_2/assets/docs/ProcedimientoInscripcionNuevoIngreso_25_2.pdf"
-                                target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Proceso de Inscripción</a>
+                                target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Proceso de
+                                Inscripción</a>
 
                     </ul>
                 </div>
@@ -168,37 +194,52 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Verificar la sesión primero
             $.ajax({
                 url: '../PHP/check_session.php',
                 type: 'GET',
-                success: function(role) {
+                success: function (role) {
                     if (role.trim() === 'alumno') {
-                        // Cargar perfil inyectando el HTML directo de PHP
-                        $('#perfil-card-body').load('../PHP/get_alumno_perfil.php', function() {
-                            $('body').show();
-                            
-                            // Mostrar mensaje de bienvenida leyendo el nombre inyectado
-                            var nombre = $('#alumno-nombre-display').text();
-                            Swal.fire({
-                                title: `¡Bienvenido, ${nombre}!`,
-                                text: 'Has iniciado sesión correctamente, al dar click en aceptar podrás descargar un PDF con la información de tu horario de examen',
-                                icon: 'success',
-                                confirmButtonColor: '#800020',
-                                confirmButtonText: 'Aceptar'
-                            });
+                        // Obtener datos del perfil en formato JSON
+                        $.ajax({
+                            url: '../PHP/get_alumno_perfil.php',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (alumno) {
+                                // Rellenar los campos en la vista
+                                $('#alumno-nombre-display').text(alumno.nombre);
+                                $('#alumno-boleta').text(alumno.boleta);
+                                $('#alumno-curp').text(alumno.curp);
+                                $('#alumno-escuela').text(alumno.escuela_procedencia);
+                                $('#alumno-promedio').text(alumno.promedio);
+                                $('#alumno-correo').text(alumno.correo);
+                                
+                                $('body').show();
+
+                                Swal.fire({
+                                    title: `¡Bienvenido, ${alumno.nombre}!`,
+                                    text: 'Has iniciado sesión correctamente, al dar click en aceptar podrás descargar un PDF con la información de tu horario de examen',
+                                    icon: 'success',
+                                    confirmButtonColor: '#800020',
+                                    confirmButtonText: 'Aceptar'
+                                });
+                            },
+                            error: function () {
+                                window.location.href = 'logincuenta.html';
+                            }
                         });
                     } else {
                         // Redirigir al login
                         window.location.href = 'logincuenta.html';
                     }
                 },
-                error: function() {
+                error: function () {
                     window.location.href = 'logincuenta.html';
                 }
             });
         });
     </script>
 </body>
+
 </html>

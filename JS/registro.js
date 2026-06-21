@@ -17,7 +17,7 @@
         marcarCampo("telefono", restel);
 
         var califv = document.forms.datos.promedio.value;
-        var rescalif = califv.match(/^([6-9](\.\d)?|10(\.0)?)$/);
+        var rescalif = califv.match(/^([6-9](\.\d{1,2})?|10(\.0{1,2})?)$/);
         marcarCampo("promedio", rescalif);
 
         var correov = document.forms.datos.correo.value;

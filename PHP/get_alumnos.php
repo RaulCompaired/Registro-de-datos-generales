@@ -7,7 +7,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-$consulta = mysqli_query($conexion, "SELECT boleta, nombre, fecha_nacimiento, genero, curp, entidad_federativa, escuela_procedencia, promedio FROM alumnos_nuevo_ingreso");
+$consulta = mysqli_query($conexion, "SELECT boleta, nombre, fecha_nacimiento, genero, curp, entidad_federativa, escuela_procedencia, promedio FROM alumnos");
 while ($fila = mysqli_fetch_assoc($consulta)) { ?>
 <tr style="height: 75px; transition: background-color 0.2s ease;">
     <td class="px-4 fw-bold" style="color: #005580;"><?php echo $fila['boleta']; ?></td>
@@ -27,7 +27,16 @@ while ($fila = mysqli_fetch_assoc($consulta)) { ?>
             style="background-color: #006699; border: none; transition: 0.2s;"
             onmouseover="this.style.backgroundColor='#005580'" 
             onmouseout="this.style.backgroundColor='#006699'"
-            onclick="abrirModal('<?php echo $fila['boleta']; ?>', '<?php echo $fila['nombre']; ?>', '<?php echo $fila['fecha_nacimiento']; ?>', '<?php echo $fila['genero']; ?>', '<?php echo $fila['curp']; ?>', '<?php echo $fila['entidad_federativa']; ?>', '<?php echo $fila['escuela_procedencia']; ?>', '<?php echo $fila['promedio']; ?>')">
+            onclick="abrirModal(
+                '<?php echo htmlspecialchars(addslashes($fila['boleta']), ENT_QUOTES, 'UTF-8'); ?>', 
+                '<?php echo htmlspecialchars(addslashes($fila['nombre']), ENT_QUOTES, 'UTF-8'); ?>', 
+                '<?php echo htmlspecialchars(addslashes($fila['fecha_nacimiento']), ENT_QUOTES, 'UTF-8'); ?>', 
+                '<?php echo htmlspecialchars(addslashes($fila['genero']), ENT_QUOTES, 'UTF-8'); ?>', 
+                '<?php echo htmlspecialchars(addslashes($fila['curp']), ENT_QUOTES, 'UTF-8'); ?>', 
+                '<?php echo htmlspecialchars(addslashes($fila['entidad_federativa']), ENT_QUOTES, 'UTF-8'); ?>', 
+                '<?php echo htmlspecialchars(addslashes($fila['escuela_procedencia']), ENT_QUOTES, 'UTF-8'); ?>', 
+                '<?php echo htmlspecialchars(addslashes($fila['promedio']), ENT_QUOTES, 'UTF-8'); ?>'
+            )">
             Editar
         </button>
     </td>

@@ -3,10 +3,10 @@ require 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $boleta = $_POST['boleta'];
-    $escuela = $_POST['escuela'];
+    $escuela = mysqli_real_escape_string($conexion, $_POST['escuela']);
     $promedio = $_POST['promedio'];
 
-    $sql = "UPDATE alumnos_nuevo_ingreso 
+    $sql = "UPDATE alumnos 
             SET escuela_procedencia = '$escuela', promedio = '$promedio' 
             WHERE boleta = '$boleta'";
 
