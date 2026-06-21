@@ -33,7 +33,7 @@ if ($user = mysqli_fetch_assoc($buscar_alumno)) {
 
 
 
-$buscar_admin = mysqli_query($conexion, "SELECT * FROM admin WHERE usuario = '$usuario'");
+$buscar_admin = mysqli_query($conexion, "SELECT * FROM `admin` WHERE usuario = '$usuario'");
 if ($user = mysqli_fetch_assoc($buscar_admin)) {
     if (password_verify($pass, $user['contrasena'])) {
         $_SESSION['usuario'] = $user['usuario'];

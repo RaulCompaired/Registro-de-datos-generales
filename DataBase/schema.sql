@@ -1,3 +1,7 @@
+create database if not exists `registroexamen`;
+use `registroexamen`;
+
+
 -- Crear tabla de administradores
 CREATE TABLE IF NOT EXISTS `admin` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -20,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `grupos` (
     `hora_fin` TIME NOT NULL,
     `limite_alumnos` INT DEFAULT 30,
     `inscritos` INT DEFAULT 0,
+    `fecha_examen` DATE DEFAULT '2026-06-25', 
     FOREIGN KEY (`laboratorio_id`) REFERENCES `laboratorios` (`id`) ON DELETE CASCADE
 );
 
@@ -95,7 +100,7 @@ INSERT IGNORE INTO `grupos` (`id`, `nombre`, `laboratorio_id`, `hora_inicio`, `h
 -- Insertar administrador por defecto (usuario: admin, contraseña: admin123)
 -- El hash corresponde a 'admin123'
 INSERT IGNORE INTO `admin` (`id`, `usuario`, `contrasena`) VALUES
-(1, 'admin', '$2y$10$wRtfP32B66qUj4F2o1sQeOcrk/K/H/7lG62Llyz8zGheK5v/L1pPe');
+(1, 'admin', '$2y$10$POUN/nDSVW1.7H6IqAS9q.Af0eGcBWkHonvhikivSZwBegW.oqmoC');
 
 
 
