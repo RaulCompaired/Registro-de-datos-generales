@@ -42,6 +42,21 @@ CREATE TABLE IF NOT EXISTS `alumnos` (
     FOREIGN KEY (`grupo_id`) REFERENCES `grupos` (`id`) ON DELETE SET NULL
 );
 
+-- Crear vista de detalles de alumnos
+CREATE OR REPLACE VIEW `vista_alumnos_detalle` AS
+SELECT 
+    a.boleta, 
+    a.nombre, 
+    a.fecha_nacimiento, 
+    a.genero, 
+    a.curp, 
+    a.entidad_federativa, 
+    a.escuela_procedencia, 
+    a.promedio, 
+    g.nombre AS grupo_nombre
+FROM alumnos a
+LEFT JOIN grupos g ON a.grupo_id = g.id;
+
 -- Insertar los 5 laboratorios
 INSERT IGNORE INTO `laboratorios` (`id`, `nombre`) VALUES
 (1, 'Laboratorio I'),

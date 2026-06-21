@@ -7,9 +7,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-$consulta = mysqli_query($conexion, "SELECT a.boleta, a.nombre, a.fecha_nacimiento, a.genero, a.curp, a.entidad_federativa, a.escuela_procedencia, a.promedio, g.nombre AS grupo_nombre 
-    FROM alumnos a
-    LEFT JOIN grupos g ON a.grupo_id = g.id");
+$consulta = mysqli_query($conexion, "SELECT * FROM vista_alumnos_detalle");
 while ($fila = mysqli_fetch_assoc($consulta)) { ?>
 <tr style="height: 75px; transition: background-color 0.2s ease;">
     <td class="px-4 fw-bold" style="color: #005580;"><?php echo $fila['boleta']; ?></td>
