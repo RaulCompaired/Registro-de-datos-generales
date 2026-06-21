@@ -110,6 +110,18 @@
                                     <span class="text-muted">Correo Institucional</span>
                                     <span class="fw-bold" id="alumno-correo"></span>
                                 </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Grupo Asignado</span>
+                                    <span class="fw-bold text-success" id="alumno-grupo"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Horario de Examen</span>
+                                    <span class="fw-bold text-dark" id="alumno-horario"></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span class="text-muted">Laboratorio</span>
+                                    <span class="fw-bold text-dark" id="alumno-laboratorio"></span>
+                                </li>
                             </ul>
                             <div class="d-grid mt-4">
                                 <a href="" class="btn btn-outline-primary btn-lg">Descargar PDF con la información de tu horario</a>
@@ -214,6 +226,9 @@
                                 $('#alumno-escuela').text(alumno.escuela_procedencia);
                                 $('#alumno-promedio').text(alumno.promedio);
                                 $('#alumno-correo').text(alumno.correo);
+                                $('#alumno-grupo').text(alumno.grupo_nombre || 'No asignado');
+                                $('#alumno-horario').text(alumno.grupo_nombre ? `${alumno.hora_inicio} - ${alumno.hora_fin}` : 'N/A');
+                                $('#alumno-laboratorio').text(alumno.laboratorio_nombre || 'N/A');
                                 
                                 $('body').show();
 

@@ -7,7 +7,9 @@ if (!isset($_SESSION['usuario']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-$consulta = mysqli_query($conexion, "SELECT boleta, nombre, fecha_nacimiento, genero, curp, entidad_federativa, escuela_procedencia, promedio FROM alumnos");
+$consulta = mysqli_query($conexion, "SELECT a.boleta, a.nombre, a.fecha_nacimiento, a.genero, a.curp, a.entidad_federativa, a.escuela_procedencia, a.promedio, g.nombre AS grupo_nombre 
+    FROM alumnos a
+    LEFT JOIN grupos g ON a.grupo_id = g.id");
 while ($fila = mysqli_fetch_assoc($consulta)) { ?>
 <tr style="height: 75px; transition: background-color 0.2s ease;">
     <td class="px-4 fw-bold" style="color: #005580;"><?php echo $fila['boleta']; ?></td>
@@ -17,6 +19,7 @@ while ($fila = mysqli_fetch_assoc($consulta)) { ?>
     <td class="px-3 text-secondary"><?php echo $fila['curp']; ?></td>
     <td class="px-3 text-secondary"><?php echo $fila['entidad_federativa']; ?></td>
     <td class="px-3 text-secondary"><?php echo $fila['escuela_procedencia']; ?></td>
+    <td class="px-3 text-secondary fw-semibold"><?php echo $fila['grupo_nombre'] ?? 'Sin grupo'; ?></td>
     <td class="px-3">
         <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle rounded-pill px-3 py-2 fs-6">
             <?php echo $fila['promedio']; ?>
