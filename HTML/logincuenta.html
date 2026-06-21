@@ -27,7 +27,7 @@
 
 <body>
 
-   <!--Encabezado de la página-->
+    <!--Encabezado de la página-->
     <header class="header-principal">
         <div id="header">
             <nav class="navbar navbar-light bg-light">
@@ -68,7 +68,7 @@
                         <a class="nav-link" href="registro.html">Registro <span class="sr-only"></span></a>
                     </li>
 
-        
+
                     <!--Item de navegación que lleva a la página de Cuenta-->
                     <li class="nav-item active mx-4">
                         <a class="nav-link" href="logincuenta.html">Cuenta</a>
@@ -95,18 +95,25 @@
                     <div class="card-body p-4 p-md-5">
                         <form name="datos" method="post" action="../PHP/sesion.php" id="loginForm">
                             <div class="mb-3">
-                                <label for="correo" class="form-label fw-bold">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="correo" name="correo">
+                                <label for="usuario" class="form-label fw-bold">Usuario</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario">
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label fw-bold">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                                <label for="contra" class="form-label fw-bold">Contraseña</label>
+                                <input type="password" class="form-control" id="contra" name="contra">
+                            </div>
+
+                            <!-- CAPTCHA -->
+                            <div class="mb-3 d-flex justify-content-center">
+                                <div class="g-recaptcha" data-sitekey="6Lf24yotAAAAAHL971fCSDp2Nzdl-Cuacwd6pyTj"
+                                    data-callback="enableBtn"></div>
                             </div>
 
                             <div class="d-grid">
                                 <div class="d-grid">
-                                    <button type="button" onclick="validarlogin()" class="btn text-white btn-lg fondo-guinda">Ingresar</button>
+                                    <button type="button" id="btn-ingresar" onclick="validarlogin()"
+                                        class="btn text-white btn-lg fondo-guinda" disabled>Ingresar</button>
                                 </div>
                             </div>
                         </form>
@@ -150,7 +157,8 @@
                                 target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Programa</a></li>
                         <li class="nav-item mb-2"><a
                                 href="https://www.escom.ipn.mx/nuevoingreso25_2/assets/docs/ProcedimientoInscripcionNuevoIngreso_25_2.pdf"
-                                target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Proceso de Inscripción</a>
+                                target="_blank" rel="noopener" class="nav-link p-0 text-white-50">Proceso de
+                                Inscripción</a>
 
                     </ul>
                 </div>
@@ -190,8 +198,9 @@
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../JS/login.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    
+
 
 </body>
 

@@ -1,9 +1,21 @@
 <?php
 session_start();
 require 'conexion.php';
+require 'config.php';
 
-$correo = $_POST['correo'];
-$pass = $_POST['password'];
+$correo = $_POST['usuario'];
+$pass = $_POST['contra'];
+$recaptcha_secret = RECAPTCHA_SECRET;
+$response = $_POST['g-recaptcha-response'];
+
+$verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptcha_secret}&response={$response}");
+$responseData = json_decode($verify);
+
+if (!$responseData->success) {
+    // El captcha no es válido, no permitimos iniciar sesión
+    echo json_encode(["status" => "error", "message" => "Por favor, completa el captcha correctamente."]);
+    exit;
+}
 
 
 $buscar_alumno = mysqli_query($conexion, "SELECT * FROM alumnos_nuevo_ingreso WHERE correo = '$correo'");
@@ -18,11 +30,11 @@ if ($user = mysqli_fetch_assoc($buscar_alumno)) {
 
 
 
-$buscar_admin = mysqli_query($conexion, "SELECT * FROM administradores WHERE correo = '$correo'");
+$buscar_admin = mysqli_query($conexion, "SELECT * FROM admin WHERE usuario = '$correo'");
 if ($user = mysqli_fetch_assoc($buscar_admin)) {
-    if ($pass === $user['contrasena']) {
-        $_SESSION['usuario'] = $user['nombre'];
-        $_SESSION['correo'] = $user['correo'];
+    if (password_verify($pass, $user['contrasena'])) {
+        $_SESSION['usuario'] = $user['usuario'];
+        $_SESSION['correo'] = $user['usuario'];
         echo json_encode(['status' => 'success', 'redirect' => '../HTML/admin.php']);
         exit;
     }

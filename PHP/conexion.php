@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';   
-$dbname = 'estudiantes'; 
+$dbname = 'registroexamen'; 
 $username = 'root';          
 $password = '';
 
