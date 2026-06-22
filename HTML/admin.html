@@ -358,27 +358,6 @@
                             <input type="date" class="form-control" id="editFechaNacimiento" name="fecha_nacimiento">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Género</label>
-                            <select class="form-control" id="editGenero" name="genero">
-                                <option value="Hombre">Hombre</option>
-                                <option value="Mujer">Mujer</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">CURP</label>
-                            <input type="text" class="form-control" id="editCURP" name="curp" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Entidad Federativa</label>
-                            <input type="text" class="form-control" id="editEntidad" name="entidad_federativa" readonly>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Escuela de Procedencia</label>
-                            <input type="text" class="form-control" id="editEscuela" name="escuela" readonly>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label">Promedio</label>
                             <input type="number" step="0.01" class="form-control" id="editPromedio" name="promedio">
                         </div>
@@ -515,6 +494,25 @@
                     window.location.href = 'logincuenta.html';
                 }
             });
+
+            // Establecer límites de fecha para editFechaNacimiento (entre 16 y 100 años)
+            var campoNacimiento = document.getElementById('editFechaNacimiento');
+            if (campoNacimiento) {
+                var hoy = new Date();
+                var fechaMax = new Date(hoy);
+                fechaMax.setFullYear(fechaMax.getFullYear() - 16);
+                var anioMax = fechaMax.getFullYear();
+                var mesMax = String(fechaMax.getMonth() + 1).padStart(2, '0');
+                var diaMax = String(fechaMax.getDate()).padStart(2, '0');
+                campoNacimiento.max = anioMax + "-" + mesMax + "-" + diaMax;
+
+                var fechaMin = new Date(hoy);
+                fechaMin.setFullYear(fechaMin.getFullYear() - 100);
+                var anioMin = fechaMin.getFullYear();
+                var mesMin = String(fechaMin.getMonth() + 1).padStart(2, '0');
+                var diaMin = String(fechaMin.getDate()).padStart(2, '0');
+                campoNacimiento.min = anioMin + "-" + mesMin + "-" + diaMin;
+            }
         });
 
         function filtrarTabla() {
@@ -601,18 +599,17 @@
             });
         }
 
-        function abrirModal(boleta, nombre, fecha_nacimiento, genero, curp, entidad_federativa, escuela, promedio, grupo, horario) {
+        function abrirModal(boleta, nombre, fecha_nacimiento, promedio, grupo) {
+            // Limpiar clases de validación anteriores
+            $('#editFechaNacimiento').removeClass('is-valid is-invalid');
+            $('#editPromedio').removeClass('is-valid is-invalid');
+            $('#editGrupo').removeClass('is-valid is-invalid');
+
             $('#editBoleta').val(boleta);
             $('#editNombre').val(nombre);
             $('#editFechaNacimiento').val(fecha_nacimiento);
-            $('#editGenero').val(genero);
-            $('#editCURP').val(curp);
-            $('#editEntidad').val(entidad_federativa);
-            $('#editEscuela').val(escuela);
             $('#editPromedio').val(promedio);
             $('#editGrupo').val(grupo);
-            $('#editHorario').val(horario);
-            $('#editFecha').val("2026-06-25");
 
             if (!modalEditar) {
                 modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
@@ -628,7 +625,50 @@
         }
 
 
+        function marcarCampo(id, resultado) {
+            var $campo = $("#" + id);
+            if (resultado == null) {
+                $campo.addClass("is-invalid").removeClass("is-valid");
+            } else {
+                $campo.removeClass("is-invalid").addClass("is-valid");
+            }
+        }
+
         function guardarCambios() {
+            var errores = [];
+
+            var fechaVal = $("#editFechaNacimiento").val();
+            var campoFecha = document.getElementById('editFechaNacimiento');
+            var fechaValida = fechaVal && fechaVal >= campoFecha.min && fechaVal <= campoFecha.max;
+            marcarCampo("editFechaNacimiento", fechaValida ? true : null);
+            if (!fechaValida) {
+                errores.push("La edad del alumno debe estar entre 16 y 100 años");
+            }
+
+            var promedioVal = $("#editPromedio").val().trim();
+            var promedioValido = promedioVal.match(/^([6-9](\.\d{1,2})?|10(\.0{1,2})?)$/);
+            marcarCampo("editPromedio", promedioValido);
+            if (!promedioValido) {
+                errores.push("El promedio debe ser un valor entre 6.00 y 10.00.");
+            }
+
+            var grupoVal = $("#editGrupo").val();
+            var grupoValido = grupoVal !== "" ? true : null;
+            marcarCampo("editGrupo", grupoValido);
+            if (!grupoValido) {
+                errores.push("El grupo es obligatorio");
+            }
+
+            if (errores.length > 0) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Errores encontrados:\n' + errores.join('\n'),
+                    icon: 'error',
+                    confirmButtonColor: '#800020'
+                });
+                return;
+            }
+
             var datos = $('#formEditar').serialize();
 
             $.ajax({

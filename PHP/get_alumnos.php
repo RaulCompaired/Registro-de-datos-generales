@@ -32,13 +32,8 @@ while ($fila = mysqli_fetch_assoc($consulta)) { ?>
                 '<?php echo htmlspecialchars(addslashes($fila['boleta']), ENT_QUOTES, 'UTF-8'); ?>', 
                 '<?php echo htmlspecialchars(addslashes($fila['nombre']), ENT_QUOTES, 'UTF-8'); ?>', 
                 '<?php echo htmlspecialchars(addslashes($fila['fecha_nacimiento']), ENT_QUOTES, 'UTF-8'); ?>', 
-                '<?php echo htmlspecialchars(addslashes($fila['genero']), ENT_QUOTES, 'UTF-8'); ?>', 
-                '<?php echo htmlspecialchars(addslashes($fila['curp']), ENT_QUOTES, 'UTF-8'); ?>', 
-                '<?php echo htmlspecialchars(addslashes($fila['entidad_federativa']), ENT_QUOTES, 'UTF-8'); ?>', 
-                '<?php echo htmlspecialchars(addslashes($fila['escuela_procedencia']), ENT_QUOTES, 'UTF-8'); ?>', 
                 '<?php echo htmlspecialchars(addslashes($fila['promedio']), ENT_QUOTES, 'UTF-8'); ?>',
-                '<?php echo htmlspecialchars(addslashes($fila['grupo_nombre'] ?? 'Sin grupo'), ENT_QUOTES, 'UTF-8'); ?>',
-                '<?php echo htmlspecialchars(addslashes($fila['horario'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>'
+                '<?php echo htmlspecialchars(addslashes($fila['grupo_nombre'] ?? 'Sin grupo'), ENT_QUOTES, 'UTF-8'); ?>'
             )">
             Editar
         </button>
