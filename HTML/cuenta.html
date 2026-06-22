@@ -221,14 +221,10 @@
 
                                 Swal.fire({
                                     title: `¡Bienvenido, ${alumno.nombre}!`,
-                                    text: 'Has iniciado sesión correctamente, al dar click en aceptar podrás descargar un PDF con la información de tu horario de examen',
+                                    text: 'Has iniciado sesión correctamente.',
                                     icon: 'success',
                                     confirmButtonColor: '#800020',
                                     confirmButtonText: 'Aceptar'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        window.location.href = '../PHP/generarPDF.php';
-                                    }
                                 });
                             },
                             error: function () {

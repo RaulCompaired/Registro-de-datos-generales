@@ -31,10 +31,15 @@ function verificarParametrosRegistro() {
             title: '¡Registro Exitoso!',
             text: 'Tus datos fueron guardados correctamente.',
             icon: 'success',
+            showCancelButton: true,
             confirmButtonColor: '#800020',
-            confirmButtonText: 'Aceptar'
-        }).then(function () {
-            window.location.href = '../PHP/generarPDF.php?boleta=' + encodeURIComponent(boleta);
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Imprimir Acuse',
+            cancelButtonText: 'Aceptar'
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                window.location.href = '../PHP/generarPDF.php?boleta=' + encodeURIComponent(boleta);
+            }
         });
     }
 }

@@ -129,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // 6. Asignar el siguiente grupo con cupo disponible usando Round Robin
+    // 6. Asignar el siguiente grupo disponible de forma circular
     $grupo_asignado_id = null;
     for ($i = 0; $i < $num_grupos; $i++) {
         $next_index = ($last_index + 1 + $i) % $num_grupos;
