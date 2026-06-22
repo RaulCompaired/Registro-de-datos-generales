@@ -128,12 +128,19 @@ $datos_examen = [
     'Laboratorio:' => $row_db['laboratorio']
 ];
 
+// Definimos un color gris muy clarito para el fondo
+$pdf->SetFillColor(240, 240, 240); 
+
 foreach ($datos_examen as $etiqueta => $valor) {
     $pdf->SetX($margen_izq);
+    
     $pdf->SetFont('Arial', 'B', 12);
-    $pdf->Cell($ancho_etiq, 10, utf8_decode($etiqueta), 0, 0, 'R');
+    // El 'true' al final enciende el color de fondo
+    $pdf->Cell($ancho_etiq, 10, utf8_decode($etiqueta), 0, 0, 'R', true);
+    
     $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell($ancho_dato, 10, utf8_decode($valor), 0, 1, 'L');
+    // El dato se queda en 'false' (sin fondo)
+    $pdf->Cell($ancho_dato, 10, utf8_decode($valor), 0, 1, 'L', true);
 }
 
 $pdf->Output('D', 'Reporte_' . $boleta . '.pdf');
