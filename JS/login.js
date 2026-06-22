@@ -1,21 +1,43 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Si ya existe una sesión activa, redirige inmediatamente sin mostrar el formulario
     $.ajax({
         url: '../PHP/check_session.php',
         type: 'GET',
-        success: function(role) {
-            var r = role.trim();
-            if (r === 'alumno') {
+        success: function (rol) {
+            var rolLimpio = rol.trim();
+            if (rolLimpio === 'alumno') {
                 window.location.href = '../HTML/cuenta.html';
-            } else if (r === 'admin') {
+            } else if (rolLimpio === 'admin') {
                 window.location.href = '../HTML/admin.html';
+            } else {
+                verificarParametrosRegistro();
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, estado, error) {
             console.error("Error al verificar la sesión:", error);
+            verificarParametrosRegistro();
         }
     });
 });
+
+function verificarParametrosRegistro() {
+    var parametrosUrl = new URLSearchParams(window.location.search);
+    if (parametrosUrl.get('registrado') === 'true') {
+        var boleta = parametrosUrl.get('boleta');
+        // Limpiamos los parámetros de la URL para que recargar la página no vuelva a disparar la alerta
+        window.history.replaceState({}, document.title, window.location.pathname);
+
+        Swal.fire({
+            title: '¡Registro Exitoso!',
+            text: 'Tus datos fueron guardados correctamente.',
+            icon: 'success',
+            confirmButtonColor: '#800020',
+            confirmButtonText: 'Aceptar'
+        }).then(function () {
+            window.location.href = '../PHP/generarPDF.php?boleta=' + encodeURIComponent(boleta);
+        });
+    }
+}
 
 function validarlogin(destino) {
     var errores = [];
@@ -23,12 +45,12 @@ function validarlogin(destino) {
     var rescorreo = correov !== "" ? true : null;
     marcarCampo("usuario", rescorreo);
 
-    var passwordv = $("#contra").val().trim();
-    var respassword = passwordv !== "" ? true : null;
-    marcarCampo("contra", respassword);
+    var contrasenav = $("#contra").val().trim();
+    var rescontrasena = contrasenav !== "" ? true : null;
+    marcarCampo("contra", rescontrasena);
 
     if (rescorreo === null) errores.push("El usuario es obligatorio");
-    if (respassword === null) errores.push("La contraseña es obligatoria");
+    if (rescontrasena === null) errores.push("La contraseña es obligatoria");
 
     if (errores.length > 0) {
         Swal.fire({
@@ -45,8 +67,8 @@ function validarlogin(destino) {
             url: '../PHP/sesion.php',
             type: 'POST',
             data: datosFormulario,
-            success: function(response) {
-                var res = response.trim();
+            success: function (respuesta) {
+                var res = respuesta.trim();
                 if (res === 'alumno') {
                     window.location.href = '../HTML/cuenta.html';
                 } else if (res === 'admin') {
@@ -64,7 +86,7 @@ function validarlogin(destino) {
                     $("#btn-ingresar").prop("disabled", true);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, estado, error) {
                 console.error("Error en la petición AJAX:", error);
                 Swal.fire({
                     title: 'Error',
@@ -91,6 +113,6 @@ function marcarCampo(id, resultado) {
 }
 
 // Callback para habilitar el botón desde reCAPTCHA
-function enableBtn() {
+function habilitarBoton() {
     $("#btn-ingresar").prop("disabled", false);
 }

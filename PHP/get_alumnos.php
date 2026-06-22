@@ -3,7 +3,7 @@ session_start();
 require 'conexion.php';
 
 if (!isset($_SESSION['usuario']) || $_SESSION['role'] !== 'admin') {
-    echo "<tr><td colspan='9' class='text-center'>No autorizado</td></tr>";
+    echo "<tr><td colspan='12' class='text-center'>No autorizado</td></tr>";
     exit;
 }
 
@@ -17,6 +17,8 @@ while ($fila = mysqli_fetch_assoc($consulta)) { ?>
     <td class="px-3 text-secondary"><?php echo $fila['curp']; ?></td>
     <td class="px-3 text-secondary"><?php echo $fila['entidad_federativa']; ?></td>
     <td class="px-3 text-secondary"><?php echo $fila['escuela_procedencia']; ?></td>
+    <td class="px-3 text-secondary"><?php echo $fila['correo']; ?></td>
+    <td class="px-3 text-secondary"><?php echo $fila['telefono'] ? $fila['telefono'] : 'N/A'; ?></td>
     <td class="px-3 text-secondary fw-semibold"><?php echo $fila['grupo_nombre'] ?? 'Sin grupo'; ?></td>
     <td class="px-3">
         <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle rounded-pill px-3 py-2 fs-6">

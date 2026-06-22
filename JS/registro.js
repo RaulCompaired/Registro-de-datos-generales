@@ -119,8 +119,8 @@
             "<li class='list-group-item'><strong>Contraseña:</strong> " + passwordv + "</li>";
 
             document.getElementById("botones").innerHTML =
-            "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Editar</button>" +
-            "<button type='button' onclick='registrarAlumno()' class='btn btn-primary'>Confirmar registro</button>";
+            "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Modificar</button>" +
+            "<button type='button' onclick='registrarAlumno()' class='btn btn-primary'>Aceptar</button>";
 
         var miModal = new bootstrap.Modal(document.getElementById('modalform'));
         miModal.show();
@@ -184,6 +184,7 @@ function registrarAlumno() {
     }
 
     var datosFormulario = $("#registroForm").serialize();
+    var boletav = $("#boleta").val();
 
     $.ajax({
         url: '../PHP/insertRegistro.php',
@@ -191,14 +192,29 @@ function registrarAlumno() {
         data: datosFormulario,
         success: function(response) {
             if (response.trim() === 'success') {
-                Swal.fire({
-                    title: '¡Registro Exitoso!',
-                    text: 'Te has registrado correctamente. Ahora puedes iniciar sesión.',
-                    icon: 'success',
-                    confirmButtonColor: '#800020'
-                }).then(function() {
-                    window.location.href = 'logincuenta.html';
-                });
+                if (window.location.pathname.includes('admin.html')) {
+                    var modalRegAdmin = document.getElementById('modalRegistrar');
+                    var regAdminInstance = bootstrap.Modal.getInstance(modalRegAdmin);
+                    if (regAdminInstance) {
+                        regAdminInstance.hide();
+                    }
+                    $("#registroForm")[0].reset();
+                    $("#registroForm input, #registroForm select").removeClass("is-valid is-invalid");
+                    
+                    Swal.fire({
+                        title: '¡Registro Exitoso!',
+                        text: 'El alumno ha sido registrado correctamente.',
+                        icon: 'success',
+                        confirmButtonColor: '#198754'
+                    }).then(function() {
+                        if (typeof cargarAlumnos === 'function') {
+                            cargarAlumnos();
+                        }
+                    });
+                } else {
+                    var boletav = document.forms.datos.boleta.value;
+                    window.location.href = 'logincuenta.html?registrado=true&boleta=' + encodeURIComponent(boletav);
+                }
             } else {
                 Swal.fire({
                     title: 'Error',

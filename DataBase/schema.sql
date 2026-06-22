@@ -58,6 +58,8 @@ SELECT
     a.entidad_federativa, 
     a.escuela_procedencia, 
     a.promedio, 
+    a.correo,
+    a.telefono,
     g.nombre AS grupo_nombre,
     CONCAT(TIME_FORMAT(g.hora_inicio, '%H:%i'), ' - ', TIME_FORMAT(g.hora_fin, '%H:%i')) AS horario,
     l.nombre AS laboratorio_nombre

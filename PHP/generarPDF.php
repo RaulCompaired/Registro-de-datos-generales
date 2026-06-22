@@ -49,12 +49,17 @@ class PDF extends FPDF {
     }
 }
 
-if (!isset($_SESSION['boleta'])) {
+$boleta = '';
+if (isset($_SESSION['boleta'])) {
+    $boleta = $_SESSION['boleta'];
+} else if (isset($_GET['boleta'])) {
+    $boleta = $_GET['boleta'];
+} else {
     echo "No autorizado";
     exit;
 }
 
-$boleta = $_SESSION['boleta'];
+$boleta = mysqli_real_escape_string($conexion, $boleta);
 $consulta = mysqli_query($conexion, "SELECT a.*, g.nombre AS grupo_nombre, g.hora_inicio, g.hora_fin, g.fecha_examen, l.nombre AS laboratorio_nombre
     FROM alumnos a
     LEFT JOIN grupos g ON a.grupo_id = g.id
@@ -62,86 +67,120 @@ $consulta = mysqli_query($conexion, "SELECT a.*, g.nombre AS grupo_nombre, g.hor
     WHERE a.boleta = '$boleta'");
 $alumno = mysqli_fetch_assoc($consulta);
 
-$row_db = [
-    "boleta"  => $alumno['boleta'],
-    "alumno"  => $alumno['nombre'],
-    "fecha_nacimiento" => $alumno['fecha_nacimiento'],
-    "correo"  => $alumno['correo'],
-    "curp"    => $alumno['curp'],
-    "grupo"   => $alumno['grupo_nombre'],
-    "hora_inicio" => $alumno['hora_inicio'],
-    "hora_fin" => $alumno['hora_fin'],
-    "fecha_examen" => $alumno['fecha_examen'],
-    "laboratorio" => $alumno['laboratorio_nombre']
-];
+if (!$alumno) {
+    echo "Alumno no encontrado";
+    exit;
+}
 
 $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
 
 $pdf->SetTextColor(0, 0, 0);
-$pdf->Ln(5);
+$pdf->Ln(2);
 
 $pdf->SetFont('Arial', 'B', 16);
-$pdf->Cell(0, 10, 'Registro de Estudiante', 0, 1, 'C');
-$pdf->Ln(8);
+$pdf->Cell(0, 10, utf8_decode('ACUSE DE REGISTRO - EXAMEN DIAGNÓSTICO'), 0, 1, 'C');
+$pdf->Ln(5);
 
 $ancho_etiq = 60;  
-$ancho_dato = 90;  
-$margen_izq = 25; 
+$ancho_dato = 110;  
+$margen_izq = 20; 
 
-// --- DATOS DEL ALUMNO ---
-$datos_alumno = [
-    'Alumno:' => $row_db['alumno'],
-    'Boleta:' => $row_db['boleta'],
-    'Fecha de Nacimiento:' => $row_db['fecha_nacimiento'],
-    'Correo:' => $row_db['correo'],
-    'CURP:' => $row_db['curp'],
-    'Grupo:' => $row_db['grupo']
-];
-
-foreach ($datos_alumno as $etiqueta => $valor) {
-    $pdf->SetX($margen_izq);
-    $pdf->SetFont('Arial', 'B', 12);
-    $pdf->Cell($ancho_etiq, 10, utf8_decode($etiqueta), 0, 0, 'R');
-    $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell($ancho_dato, 10, utf8_decode($valor), 0, 1, 'L');
-}
-
-$pdf->Ln(10);
-
-$pdf->SetDrawColor(200, 200, 200);
-$pdf->Line(40, $pdf->GetY(), $pdf->GetPageWidth() - 40, $pdf->GetY());
-$pdf->Ln(10);
-
-// --- INFORMACIÓN DE EXAMEN ---
-$pdf->SetFont('Arial', 'B', 14);
+// --- SECCIÓN 1: DATOS PERSONALES Y PROCEDENCIA ---
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->SetTextColor(0, 51, 153); // Azul ESCOM para subtítulo
-$pdf->Cell(0, 10, utf8_decode('Información de Examen'), 0, 1, 'C'); 
-$pdf->Ln(5);
+$pdf->SetX($margen_izq);
+$pdf->Cell(0, 8, utf8_decode('Datos del Alumno'), 0, 1, 'L');
+$pdf->SetDrawColor(0, 51, 153);
+$pdf->Line($margen_izq, $pdf->GetY(), $pdf->GetPageWidth() - 20, $pdf->GetY());
+$pdf->Ln(4);
+
 $pdf->SetTextColor(0, 0, 0);
 
-$datos_examen = [
-    'Hora de Inicio:' => $row_db['hora_inicio'],
-    'Hora de fin:' => $row_db['hora_fin'],
-    'Fecha de Examen:' => $row_db['fecha_examen'],
-    'Laboratorio:' => $row_db['laboratorio']
-];
-
-// Definimos un color gris muy clarito para el fondo
-$pdf->SetFillColor(240, 240, 240); 
-
-foreach ($datos_examen as $etiqueta => $valor) {
-    $pdf->SetX($margen_izq);
-    
-    $pdf->SetFont('Arial', 'B', 12);
-    // El 'true' al final enciende el color de fondo
-    $pdf->Cell($ancho_etiq, 10, utf8_decode($etiqueta), 0, 0, 'R', true);
-    
-    $pdf->SetFont('Arial', '', 12);
-    // El dato se queda en 'false' (sin fondo)
-    $pdf->Cell($ancho_dato, 10, utf8_decode($valor), 0, 1, 'L', true);
+$escuela_show = $alumno['escuela_procedencia'];
+if ($escuela_show === 'Otro' && !empty($alumno['nombre_escuela'])) {
+    $escuela_show = $alumno['nombre_escuela'];
 }
 
+$datos_personales = [
+    'Nombre completo:' => $alumno['nombre'],
+    'No. de Boleta:' => $alumno['boleta'],
+    'Fecha de Nacimiento:' => date("d/m/Y", strtotime($alumno['fecha_nacimiento'])),
+    'Género:' => $alumno['genero'],
+    'CURP:' => $alumno['curp'],
+    'Entidad Federativa:' => $alumno['entidad_federativa'],
+    'Teléfono:' => $alumno['telefono'] ? $alumno['telefono'] : 'N/A',
+    'Escuela de Procedencia:' => $escuela_show,
+    'Promedio de Bachillerato:' => $alumno['promedio'],
+    'Correo Institucional:' => $alumno['correo']
+];
+
+foreach ($datos_personales as $etiqueta => $valor) {
+    $pdf->SetX($margen_izq);
+    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->Cell($ancho_etiq, 7, utf8_decode($etiqueta), 0, 0, 'L');
+    $pdf->SetFont('Arial', '', 10);
+    $pdf->Cell($ancho_dato, 7, utf8_decode($valor), 0, 1, 'L');
+}
+
+$pdf->Ln(6);
+
+// --- SECCIÓN 2: DETALLES DE EXAMEN (RESALTADOS) ---
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->SetTextColor(0, 51, 153); // Azul ESCOM
+$pdf->SetX($margen_izq);
+$pdf->Cell(0, 8, utf8_decode('Detalles de la Cita para el Examen Diagnóstico'), 0, 1, 'L');
+$pdf->SetDrawColor(0, 51, 153);
+$pdf->Line($margen_izq, $pdf->GetY(), $pdf->GetPageWidth() - 20, $pdf->GetY());
+$pdf->Ln(4);
+
+// Fondo gris claro para resaltar la tarjeta de examen
+$pdf->SetFillColor(245, 245, 245);
+$pdf->SetDrawColor(180, 180, 180);
+$pdf->SetX($margen_izq);
+
+// Calcular la altura y dibujar el rectángulo de fondo de la cita
+$y_inicio = $pdf->GetY();
+$y_fin = $y_inicio + 38; // Estimado para 4 filas de datos con padding
+
+$pdf->Rect($margen_izq, $y_inicio, $pdf->GetPageWidth() - 40, $y_fin - $y_inicio, 'DF');
+
+// Imprimir los datos del examen dentro del área resaltada
+// Grupo
+$pdf->SetY($y_inicio + 3);
+$pdf->SetX($margen_izq + 5);
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->SetTextColor(128, 0, 32); // Guinda IPN para resaltar
+$pdf->Cell($ancho_etiq - 5, 8, utf8_decode('Grupo Asignado:'), 0, 0, 'L');
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell($ancho_dato - 5, 8, utf8_decode($alumno['grupo_nombre'] ?? 'Sin grupo'), 0, 1, 'L');
+
+// Horario
+$horario_show = $alumno['grupo_nombre'] ? (date("H:i", strtotime($alumno['hora_inicio'])) . ' a ' . date("H:i", strtotime($alumno['hora_fin']))) : 'N/A';
+$pdf->SetX($margen_izq + 5);
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->SetTextColor(128, 0, 32); // Guinda IPN para resaltar
+$pdf->Cell($ancho_etiq - 5, 8, utf8_decode('Horario de Examen:'), 0, 0, 'L');
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell($ancho_dato - 5, 8, utf8_decode($horario_show), 0, 1, 'L');
+
+// Laboratorio (normal, negro)
+$pdf->SetTextColor(0, 0, 0);
+$pdf->SetX($margen_izq + 5);
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell($ancho_etiq - 5, 8, utf8_decode('Laboratorio asignado:'), 0, 0, 'L');
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell($ancho_dato - 5, 8, utf8_decode($alumno['laboratorio_nombre'] ?? 'N/A'), 0, 1, 'L');
+
+// Fecha Examen (normal, negro)
+$fecha_examen_show = $alumno['grupo_nombre'] ? date("d/m/Y", strtotime($alumno['fecha_examen'])) : 'N/A';
+$pdf->SetX($margen_izq + 5);
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell($ancho_etiq - 5, 8, utf8_decode('Fecha de Examen:'), 0, 0, 'L');
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell($ancho_dato - 5, 8, utf8_decode($fecha_examen_show), 0, 1, 'L');
+
 $pdf->Output('D', 'Reporte_' . $boleta . '.pdf');
+exit;
 ?>
