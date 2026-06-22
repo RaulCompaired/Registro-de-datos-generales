@@ -167,6 +167,13 @@ BEFORE INSERT ON `alumnos`
 FOR EACH ROW
 BEGIN
     CALL sp_validar_alumno(NEW.boleta, NEW.nombre, NEW.fecha_nacimiento, NEW.curp, NEW.promedio, NEW.correo, NEW.telefono);
+    
+    -- Validar que el grupo no este lleno
+    IF NEW.grupo_id IS NOT NULL THEN
+        IF (SELECT inscritos FROM grupos WHERE id = NEW.grupo_id) >= (SELECT limite_alumnos FROM grupos WHERE id = NEW.grupo_id) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El grupo seleccionado ya esta lleno.';
+        END IF;
+    END IF;
 END;
 //
 
@@ -177,6 +184,13 @@ BEFORE UPDATE ON `alumnos`
 FOR EACH ROW
 BEGIN
     CALL sp_validar_alumno(NEW.boleta, NEW.nombre, NEW.fecha_nacimiento, NEW.curp, NEW.promedio, NEW.correo, NEW.telefono);
+    
+    -- Validar que el nuevo grupo no este lleno si cambia de grupo
+    IF NEW.grupo_id IS NOT NULL AND (OLD.grupo_id IS NULL OR NEW.grupo_id != OLD.grupo_id) THEN
+        IF (SELECT inscritos FROM grupos WHERE id = NEW.grupo_id) >= (SELECT limite_alumnos FROM grupos WHERE id = NEW.grupo_id) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El grupo seleccionado ya esta lleno.';
+        END IF;
+    END IF;
 END;
 //
 
