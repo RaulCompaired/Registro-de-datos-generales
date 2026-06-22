@@ -3,9 +3,20 @@ require 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $boleta = $_POST['boleta'];
+    $nombre = $_POST['nombre'] ?? '';
     $promedio = $_POST['promedio'];
     $grupo = $_POST['grupo'];
     $fecha_nacimiento = $_POST['fecha_nacimiento'] ?? '';
+
+    // Validar nombre en el Backend
+    if (empty($nombre)) {
+        echo "El nombre es obligatorio.";
+        exit;
+    }
+    if (!preg_match('/^[A-Z][a-z]+ [A-Z][a-z]+( |[A-Z a-z])*$/', $nombre)) {
+        echo "El nombre no es válido (debe iniciar con mayúsculas y contener al menos nombre y apellido).";
+        exit;
+    }
 
     // Validar fecha de nacimiento (edad entre 16 y 100 años)
     if (empty($fecha_nacimiento)) {
@@ -41,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $sql = "UPDATE alumnos 
-            SET fecha_nacimiento = '$fecha_nacimiento', promedio = '$promedio', grupo_id = " . ($romanos[$romano] ?? 'NULL') . "
+            SET nombre = '$nombre', fecha_nacimiento = '$fecha_nacimiento', promedio = '$promedio', grupo_id = " . ($romanos[$romano] ?? 'NULL') . "
             WHERE boleta = '$boleta'";
 
     if (mysqli_query($conexion, $sql)) {

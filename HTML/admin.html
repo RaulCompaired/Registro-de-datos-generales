@@ -350,7 +350,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Nombre del Alumno</label>
-                            <input type="text" class="form-control" id="editNombre" readonly>
+                            <input type="text" class="form-control" id="editNombre" name="nombre">
                         </div>
 
                         <div class="mb-3">
@@ -393,6 +393,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-danger me-auto" onclick="eliminarAlumno()">Eliminar
+                        Alumno</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" onclick="guardarCambios()">Guardar Cambios</button>
                 </div>
@@ -601,6 +603,7 @@
 
         function abrirModal(boleta, nombre, fecha_nacimiento, promedio, grupo) {
             // Limpiar clases de validación anteriores
+            $('#editNombre').removeClass('is-valid is-invalid');
             $('#editFechaNacimiento').removeClass('is-valid is-invalid');
             $('#editPromedio').removeClass('is-valid is-invalid');
             $('#editGrupo').removeClass('is-valid is-invalid');
@@ -636,6 +639,13 @@
 
         function guardarCambios() {
             var errores = [];
+
+            var nombreVal = $("#editNombre").val().trim();
+            var nombreValido = nombreVal.match(/^[A-Z][a-z]+ [A-Z][a-z]+( |[A-Z a-z])*$/);
+            marcarCampo("editNombre", nombreValido);
+            if (!nombreValido) {
+                errores.push("El nombre no es válido (debe iniciar con mayúsculas y contener al menos nombre y apellido).");
+            }
 
             var fechaVal = $("#editFechaNacimiento").val();
             var campoFecha = document.getElementById('editFechaNacimiento');
@@ -704,6 +714,61 @@
                         text: 'Error al guardar los cambios en el servidor.',
                         icon: 'error',
                         confirmButtonColor: '#800020'
+                    });
+                }
+            });
+        }
+
+        function eliminarAlumno() {
+            var boleta = $('#editBoleta').val();
+            var nombre = $('#editNombre').val();
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Estás seguro de realizar esta acción? No podrá revertirse una vez hecha.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '../PHP/eliminar_alumno.php',
+                        type: 'POST',
+                        data: { boleta: boleta },
+                        success: function (response) {
+                            if (response.trim() === 'success') {
+                                if (modalEditar) {
+                                    modalEditar.hide();
+                                }
+                                Swal.fire({
+                                    title: '¡Eliminado!',
+                                    text: 'El alumno ha sido eliminado correctamente.',
+                                    icon: 'success',
+                                    confirmButtonColor: '#198754'
+                                }).then(function () {
+                                    cargarAlumnos(); // Recargar la lista
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: response,
+                                    icon: 'error',
+                                    confirmButtonColor: '#800020'
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ocurrió un error al intentar eliminar el alumno.',
+                                icon: 'error',
+                                confirmButtonColor: '#800020'
+                            });
+                        }
                     });
                 }
             });
